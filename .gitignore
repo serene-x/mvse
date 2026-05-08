@@ -1,0 +1,36 @@
+# env / secrets
+.env
+.env.local
+.env.*.local
+
+# node
+node_modules/
+*.log
+npm-debug.log*
+
+# build output
+dist/
+dist-electron/
+release/
+build/
+
+# flutter
+glowmatch/.dart_tool/
+glowmatch/.flutter-plugins
+glowmatch/.flutter-plugins-dependencies
+glowmatch/build/
+glowmatch/ios/Pods/
+glowmatch/ios/.symlinks
+glowmatch/android/.gradle
+glowmatch/android/local.properties
+glowmatch/.idea/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+tmp/
+
+# claude code workspace state
+.claude/
