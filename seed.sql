@@ -88,9 +88,7 @@ insert into public.products (name, brand, category, sephora_url, ulta_url) value
   'https://www.sephora.com/product/summer-fridays-lip-butter-balm-P481221',
   'https://www.ulta.com/p/lip-butter-balm-pimprod2030538');
 
--- =========================================================
 -- A few representative shades per product (sampled, not exhaustive)
--- =========================================================
 with p as (
   select id, name, brand from public.products
 )

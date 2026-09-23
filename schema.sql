@@ -4,9 +4,7 @@
 
 create extension if not exists "pgcrypto";
 
--- =========================================================
 -- users  (1:1 with auth.users)
--- =========================================================
 create table if not exists public.users (
   id uuid primary key references auth.users(id) on delete cascade,
   skin_tone_desc text,
@@ -16,9 +14,7 @@ create table if not exists public.users (
   updated_at timestamptz not null default now()
 );
 
--- =========================================================
 -- products
--- =========================================================
 create table if not exists public.products (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -32,9 +28,7 @@ create table if not exists public.products (
 create index if not exists products_category_idx on public.products(category);
 create index if not exists products_brand_idx on public.products(brand);
 
--- =========================================================
 -- product_shades
--- =========================================================
 create table if not exists public.product_shades (
   id uuid primary key default gen_random_uuid(),
   product_id uuid not null references public.products(id) on delete cascade,
@@ -44,9 +38,7 @@ create table if not exists public.product_shades (
 );
 create index if not exists product_shades_product_idx on public.product_shades(product_id);
 
--- =========================================================
 -- creators
--- =========================================================
 create table if not exists public.creators (
   id uuid primary key default gen_random_uuid(),
   tiktok_handle text not null unique,
@@ -55,9 +47,7 @@ create table if not exists public.creators (
   created_at timestamptz not null default now()
 );
 
--- =========================================================
 -- shade_twins  (symmetric pairing of creators)
--- =========================================================
 create table if not exists public.shade_twins (
   creator_a_id uuid not null references public.creators(id) on delete cascade,
   creator_b_id uuid not null references public.creators(id) on delete cascade,
@@ -68,9 +58,7 @@ create table if not exists public.shade_twins (
 );
 create index if not exists shade_twins_b_idx on public.shade_twins(creator_b_id);
 
--- =========================================================
 -- tiktok_mentions
--- =========================================================
 create table if not exists public.tiktok_mentions (
   id uuid primary key default gen_random_uuid(),
   product_id uuid not null references public.products(id) on delete cascade,
@@ -82,9 +70,7 @@ create table if not exists public.tiktok_mentions (
 create index if not exists tiktok_mentions_product_idx on public.tiktok_mentions(product_id);
 create index if not exists tiktok_mentions_created_idx on public.tiktok_mentions(created_at desc);
 
--- =========================================================
 -- user_owned_products  (user's vanity)
--- =========================================================
 create table if not exists public.user_owned_products (
   user_id uuid not null references auth.users(id) on delete cascade,
   product_id uuid not null references public.products(id) on delete cascade,
@@ -94,9 +80,7 @@ create table if not exists public.user_owned_products (
   primary key (user_id, product_id, shade_name)
 );
 
--- =========================================================
 -- user_saved_products  (wishlist)
--- =========================================================
 create table if not exists public.user_saved_products (
   user_id uuid not null references auth.users(id) on delete cascade,
   product_id uuid not null references public.products(id) on delete cascade,
@@ -104,9 +88,7 @@ create table if not exists public.user_saved_products (
   primary key (user_id, product_id)
 );
 
--- =========================================================
 -- updated_at trigger for users
--- =========================================================
 create or replace function public.tg_set_updated_at()
 returns trigger language plpgsql as $$
 begin
@@ -119,9 +101,7 @@ create trigger users_set_updated_at
   before update on public.users
   for each row execute function public.tg_set_updated_at();
 
--- =========================================================
 -- Auto-create public.users row when an auth.users row is inserted
--- =========================================================
 create or replace function public.handle_new_auth_user()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
@@ -135,9 +115,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_auth_user();
 
--- =========================================================
 -- Row Level Security
--- =========================================================
 alter table public.users               enable row level security;
 alter table public.products            enable row level security;
 alter table public.product_shades      enable row level security;
@@ -218,9 +196,7 @@ drop policy if exists "saved delete self" on public.user_saved_products;
 create policy "saved delete self" on public.user_saved_products
   for delete to authenticated using (auth.uid() = user_id);
 
--- =========================================================
 -- Realtime: products + tiktok_mentions
--- =========================================================
 do $$
 begin
   if not exists (

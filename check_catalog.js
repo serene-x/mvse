@@ -4,17 +4,24 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(__dirname, '.env'), 'utf8')
-    .split('\n').map(l => l.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/)).filter(Boolean)
-    .map(m => [m[1], m[2].replace(/^['"]|['"]$/g, '')])
+  fs
+    .readFileSync(path.join(__dirname, '.env'), 'utf8')
+    .split('\n')
+    .map((l) => l.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/))
+    .filter(Boolean)
+    .map((m) => [m[1], m[2].replace(/^['"]|['"]$/g, '')]),
 );
-const REF = (env.SUPABASE_URL.match(/https:\/\/([a-z0-9]+)\.supabase\.co/) || [])[1];
+const REF = (env.SUPABASE_URL.match(/https:\/\/([a-z0-9]+)\.supabase\.co/) ||
+  [])[1];
 const ENDPOINT = `https://api.supabase.com/v1/projects/${REF}/database/query`;
 
 async function sql(query) {
   const r = await fetch(ENDPOINT, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${env.SUPABASE_ACCESS_TOKEN}`, 'Content-Type': 'application/json' },
+    headers: {
+      Authorization: `Bearer ${env.SUPABASE_ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ query }),
   });
   return r.json();
@@ -34,8 +41,11 @@ async function sql(query) {
   for (const r of counts) console.log(`  ${r.table_name.padEnd(22)} ${r.n}`);
 
   console.log('\n--- products in catalog (will be PRESERVED) ---');
-  const products = await sql(`select brand, name, category from products order by category, brand;`);
-  for (const p of products) console.log(`  ${p.category.padEnd(11)} ${p.brand.padEnd(20)} ${p.name}`);
+  const products = await sql(
+    `select brand, name, category from products order by category, brand;`,
+  );
+  for (const p of products)
+    console.log(`  ${p.category.padEnd(11)} ${p.brand.padEnd(20)} ${p.name}`);
 
   console.log('\n--- shades sample (will be PRESERVED) — first 15 ---');
   const shades = await sql(`
@@ -44,6 +54,8 @@ async function sql(query) {
     order by p.brand, p.name, ps.shade_name limit 15;
   `);
   for (const s of shades) {
-    console.log(`  ${s.brand.padEnd(20)} ${s.product.padEnd(45)} ${s.shade_name.padEnd(20)} ${s.hex_color ?? ''}`);
+    console.log(
+      `  ${s.brand.padEnd(20)} ${s.product.padEnd(45)} ${s.shade_name.padEnd(20)} ${s.hex_color ?? ''}`,
+    );
   }
 })();

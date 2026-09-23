@@ -41,7 +41,8 @@ class Pill extends StatelessWidget {
               ],
               Text(
                 label,
-                style: TextStyle(color: fg, fontSize: 12.5, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    color: fg, fontSize: 12.5, fontWeight: FontWeight.w500),
               ),
             ],
           ),

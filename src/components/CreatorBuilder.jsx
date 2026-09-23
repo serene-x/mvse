@@ -18,9 +18,14 @@ export default function CreatorBuilder() {
   useEffect(() => {
     (async () => {
       const [{ data: c }, { data: p }, { data: ps }] = await Promise.all([
-        supabase.from('creators').select('id, tiktok_handle, shade_profile, skin_tone_desc').order('tiktok_handle'),
+        supabase
+          .from('creators')
+          .select('id, tiktok_handle, shade_profile, skin_tone_desc')
+          .order('tiktok_handle'),
         supabase.from('products').select('id, brand, name').order('brand'),
-        supabase.from('product_shades').select('id, product_id, shade_name, hex_color'),
+        supabase
+          .from('product_shades')
+          .select('id, product_id, shade_name, hex_color'),
       ]);
       setCreators(c ?? []);
       setProducts(p ?? []);
@@ -28,7 +33,10 @@ export default function CreatorBuilder() {
     })();
   }, []);
 
-  const active = useMemo(() => creators.find(c => c.id === activeId), [creators, activeId]);
+  const active = useMemo(
+    () => creators.find((c) => c.id === activeId),
+    [creators, activeId],
+  );
 
   useEffect(() => {
     if (!active) return;
@@ -38,10 +46,13 @@ export default function CreatorBuilder() {
         .from('tiktok_videos')
         .select('id, video_url, view_count, nlp_result, transcript, status')
         .eq('creator_id', active.id);
-      const ids = (videos ?? []).map(v => v.id);
-      setVideosById(Object.fromEntries((videos ?? []).map(v => [v.id, v])));
+      const ids = (videos ?? []).map((v) => v.id);
+      setVideosById(Object.fromEntries((videos ?? []).map((v) => [v.id, v])));
       if (ids.length === 0) {
-        setEntities([]); setProductPicks({}); setShadePicks({}); setShadeInputs({});
+        setEntities([]);
+        setProductPicks({});
+        setShadePicks({});
+        setShadeInputs({});
         return;
       }
 
@@ -52,7 +63,9 @@ export default function CreatorBuilder() {
         .eq('reviewed', false)
         .order('created_at', { ascending: false });
       setEntities(data ?? []);
-      setProductPicks({}); setShadePicks({}); setShadeInputs({});
+      setProductPicks({});
+      setShadePicks({});
+      setShadeInputs({});
     })();
   }, [active]);
 
@@ -69,15 +82,16 @@ export default function CreatorBuilder() {
         const cleanShade = normalizeShadeName(e.shade_guess);
         nextInputs[e.id] = cleanShade;
         if (cleanShade) {
-          const existing = (shadesByProductId[match.id] ?? [])
-            .find(s => s.shade_name.toLowerCase() === cleanShade.toLowerCase());
+          const existing = (shadesByProductId[match.id] ?? []).find(
+            (s) => s.shade_name.toLowerCase() === cleanShade.toLowerCase(),
+          );
           if (existing) nextShades[e.id] = existing.id;
         }
       }
     }
-    setProductPicks(prev => ({ ...nextProducts, ...prev }));
-    setShadePicks(prev => ({ ...nextShades, ...prev }));
-    setShadeInputs(prev => ({ ...nextInputs, ...prev }));
+    setProductPicks((prev) => ({ ...nextProducts, ...prev }));
+    setShadePicks((prev) => ({ ...nextShades, ...prev }));
+    setShadeInputs((prev) => ({ ...nextInputs, ...prev }));
   }, [entities, products, shadesByProductId]);
 
   async function resolveShadeId(entityId, productId) {
@@ -86,16 +100,26 @@ export default function CreatorBuilder() {
     const typed = (shadeInputs[entityId] ?? '').trim();
     if (!typed) return null;
 
-    const existing = (shadesByProductId[productId] ?? [])
-      .find(s => s.shade_name.toLowerCase() === typed.toLowerCase());
+    const existing = (shadesByProductId[productId] ?? []).find(
+      (s) => s.shade_name.toLowerCase() === typed.toLowerCase(),
+    );
     if (existing) return existing.id;
 
-    const created = await admin.addShade({ productId, shadeName: typed, hexColor: null });
-    setShadesByPid(prev => ({
+    const created = await admin.addShade({
+      productId,
+      shadeName: typed,
+      hexColor: null,
+    });
+    setShadesByPid((prev) => ({
       ...prev,
       [productId]: [
         ...(prev[productId] ?? []),
-        { id: created.id, product_id: productId, shade_name: typed, hex_color: null },
+        {
+          id: created.id,
+          product_id: productId,
+          shade_name: typed,
+          hex_color: null,
+        },
       ],
     }));
     return created.id;
@@ -109,9 +133,12 @@ export default function CreatorBuilder() {
     try {
       const shadeId = await resolveShadeId(entity.id, productId);
       const video = videosById[entity.video_id];
-      const shade = (shadesByProductId[productId] ?? []).find(s => s.id === shadeId);
-      const product = products.find(p => p.id === productId);
-      const shadeName = shade?.shade_name ?? normalizeShadeName(entity.shade_guess);
+      const shade = (shadesByProductId[productId] ?? []).find(
+        (s) => s.id === shadeId,
+      );
+      const product = products.find((p) => p.id === productId);
+      const shadeName =
+        shade?.shade_name ?? normalizeShadeName(entity.shade_guess);
 
       await admin.confirmEntity({ id: entity.id, productId, shadeId });
 
@@ -129,14 +156,22 @@ export default function CreatorBuilder() {
         const updated = { ...(active.shade_profile ?? {}) };
         const key = product?.brand ?? entity.brand_guess ?? 'unknown';
         updated[key] = updated[key] ?? [];
-        const exists = updated[key].some(x => x.product === product?.name && x.shade === shadeName);
+        const exists = updated[key].some(
+          (x) => x.product === product?.name && x.shade === shadeName,
+        );
         if (!exists) {
-          updated[key].push({ product: product?.name ?? entity.product_guess, shade: shadeName });
+          updated[key].push({
+            product: product?.name ?? entity.product_guess,
+            shade: shadeName,
+          });
         }
-        await admin.updateCreator({ id: active.id, fields: { shade_profile: updated } });
+        await admin.updateCreator({
+          id: active.id,
+          fields: { shade_profile: updated },
+        });
       }
 
-      setEntities(prev => prev.filter(e => e.id !== entity.id));
+      setEntities((prev) => prev.filter((e) => e.id !== entity.id));
     } finally {
       setSavingId(null);
     }
@@ -144,37 +179,60 @@ export default function CreatorBuilder() {
 
   async function reject(entity) {
     await admin.confirmEntity({ id: entity.id });
-    setEntities(prev => prev.filter(e => e.id !== entity.id));
+    setEntities((prev) => prev.filter((e) => e.id !== entity.id));
   }
 
   async function saveSkinTone() {
     if (!active) return;
-    await admin.updateCreator({ id: active.id, fields: { skin_tone_desc: skinToneDesc } });
+    await admin.updateCreator({
+      id: active.id,
+      fields: { skin_tone_desc: skinToneDesc },
+    });
   }
 
   return (
     <>
       <h2>Creators</h2>
-      <select value={activeId ?? ''} onChange={e => setActiveId(e.target.value || null)}>
+      <select
+        value={activeId ?? ''}
+        onChange={(e) => setActiveId(e.target.value || null)}
+      >
         <option value="">— pick a creator —</option>
-        {creators.map(c => <option key={c.id} value={c.id}>@{c.tiktok_handle}</option>)}
+        {creators.map((c) => (
+          <option key={c.id} value={c.id}>
+            @{c.tiktok_handle}
+          </option>
+        ))}
       </select>
 
       {active && (
         <>
           <label>Skin tone description</label>
-          <input value={skinToneDesc} onChange={e => setSkinToneDesc(e.target.value)}
-                 placeholder="e.g., medium-tan, warm-neutral" />
-          <button className="ghost" style={{ marginTop: 6 }} onClick={saveSkinTone}>Save</button>
+          <input
+            value={skinToneDesc}
+            onChange={(e) => setSkinToneDesc(e.target.value)}
+            placeholder="e.g., medium-tan, warm-neutral"
+          />
+          <button
+            className="ghost"
+            style={{ marginTop: 6 }}
+            onClick={saveSkinTone}
+          >
+            Save
+          </button>
 
           <VideoInsights videos={Object.values(videosById)} />
 
-          <h2 style={{ marginTop: 16 }}>Pending shade extractions ({entities.length})</h2>
+          <h2 style={{ marginTop: 16 }}>
+            Pending shade extractions ({entities.length})
+          </h2>
           {entities.length === 0 && (
-            <div style={{ color: 'var(--muted)', fontSize: 12 }}>Nothing to review.</div>
+            <div style={{ color: 'var(--muted)', fontSize: 12 }}>
+              Nothing to review.
+            </div>
           )}
 
-          {entities.map(e => (
+          {entities.map((e) => (
             <EntityCard
               key={e.id}
               entity={e}
@@ -184,14 +242,24 @@ export default function CreatorBuilder() {
               shadeId={shadePicks[e.id] ?? ''}
               shadeInput={shadeInputs[e.id] ?? ''}
               isSaving={savingId === e.id}
-              onProductPick={pid => {
-                setProductPicks(p => ({ ...p, [e.id]: pid }));
-                setShadePicks(p => { const n = { ...p }; delete n[e.id]; return n; });
+              onProductPick={(pid) => {
+                setProductPicks((p) => ({ ...p, [e.id]: pid }));
+                setShadePicks((p) => {
+                  const n = { ...p };
+                  delete n[e.id];
+                  return n;
+                });
               }}
-              onShadePick={sid => setShadePicks(p => ({ ...p, [e.id]: sid }))}
-              onShadeInput={txt => {
-                setShadeInputs(p => ({ ...p, [e.id]: txt }));
-                setShadePicks(p => { const n = { ...p }; delete n[e.id]; return n; });
+              onShadePick={(sid) =>
+                setShadePicks((p) => ({ ...p, [e.id]: sid }))
+              }
+              onShadeInput={(txt) => {
+                setShadeInputs((p) => ({ ...p, [e.id]: txt }));
+                setShadePicks((p) => {
+                  const n = { ...p };
+                  delete n[e.id];
+                  return n;
+                });
               }}
               onSave={() => saveEntity(e)}
               onSkip={() => reject(e)}
@@ -204,15 +272,23 @@ export default function CreatorBuilder() {
 }
 
 function EntityCard({
-  entity, products, shadesByProductId,
-  productId, shadeId, shadeInput,
+  entity,
+  products,
+  shadesByProductId,
+  productId,
+  shadeId,
+  shadeInput,
   isSaving,
-  onProductPick, onShadePick, onShadeInput, onSave, onSkip,
+  onProductPick,
+  onShadePick,
+  onShadeInput,
+  onSave,
+  onSkip,
 }) {
   const productShades = shadesByProductId[productId] ?? [];
   const trimmedInput = (shadeInput ?? '').trim();
   const matchesExistingShade = productShades.find(
-    s => s.shade_name.toLowerCase() === trimmedInput.toLowerCase()
+    (s) => s.shade_name.toLowerCase() === trimmedInput.toLowerCase(),
   );
   const willCreateNew = !matchesExistingShade && !!trimmedInput;
   const canSave = !!productId && (!!shadeId || !!trimmedInput);
@@ -221,45 +297,72 @@ function EntityCard({
     <div className="entity-card">
       <div className="source">{entity.source}</div>
       <div className="kv">
-        <div className="k">brand</div><div>{entity.brand_guess ?? '—'}</div>
-        <div className="k">product</div><div>{entity.product_guess ?? '—'}</div>
-        <div className="k">shade</div><div>{entity.shade_guess ?? '—'}</div>
-        {Array.isArray(entity.sentiment_tags) && entity.sentiment_tags.length > 0 && (
-          <>
-            <div className="k">sentiment</div>
-            <div>{entity.sentiment_tags.join(', ')}</div>
-          </>
-        )}
+        <div className="k">brand</div>
+        <div>{entity.brand_guess ?? '—'}</div>
+        <div className="k">product</div>
+        <div>{entity.product_guess ?? '—'}</div>
+        <div className="k">shade</div>
+        <div>{entity.shade_guess ?? '—'}</div>
+        {Array.isArray(entity.sentiment_tags) &&
+          entity.sentiment_tags.length > 0 && (
+            <>
+              <div className="k">sentiment</div>
+              <div>{entity.sentiment_tags.join(', ')}</div>
+            </>
+          )}
       </div>
       {entity.raw_text && (
-        <div style={{ color: 'var(--muted)', fontSize: 11, marginTop: 6, whiteSpace: 'pre-wrap' }}>
-          {entity.raw_text.slice(0, 300)}{entity.raw_text.length > 300 ? '…' : ''}
+        <div
+          style={{
+            color: 'var(--muted)',
+            fontSize: 11,
+            marginTop: 6,
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {entity.raw_text.slice(0, 300)}
+          {entity.raw_text.length > 300 ? '…' : ''}
         </div>
       )}
 
       <label style={{ marginTop: 8 }}>Link to product</label>
-      <select value={productId} onChange={ev => onProductPick(ev.target.value)}>
+      <select
+        value={productId}
+        onChange={(ev) => onProductPick(ev.target.value)}
+      >
         <option value="">— pick a product —</option>
-        {products.map(p => (
-          <option key={p.id} value={p.id}>{p.brand} · {p.name}</option>
+        {products.map((p) => (
+          <option key={p.id} value={p.id}>
+            {p.brand} · {p.name}
+          </option>
         ))}
       </select>
 
       {productId && (
         <>
           <label style={{ marginTop: 8 }}>Shade in this product</label>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 6 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 6,
+              marginBottom: 6,
+            }}
+          >
             {productShades.length === 0 && (
               <span style={{ fontSize: 11, color: 'var(--muted)' }}>
                 No shades yet for this product — type one below.
               </span>
             )}
-            {productShades.map(s => {
+            {productShades.map((s) => {
               const on = shadeId === s.id;
               return (
                 <button
                   key={s.id}
-                  onClick={() => { onShadePick(s.id); onShadeInput(s.shade_name); }}
+                  onClick={() => {
+                    onShadePick(s.id);
+                    onShadeInput(s.shade_name);
+                  }}
                   style={{
                     fontSize: 11,
                     padding: '4px 10px',
@@ -274,11 +377,15 @@ function EntityCard({
                   }}
                 >
                   {s.hex_color && (
-                    <span style={{
-                      width: 10, height: 10, borderRadius: '50%',
-                      background: s.hex_color,
-                      border: '1px solid rgba(255,255,255,.2)',
-                    }} />
+                    <span
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: '50%',
+                        background: s.hex_color,
+                        border: '1px solid rgba(255,255,255,.2)',
+                      }}
+                    />
                   )}
                   {s.shade_name}
                 </button>
@@ -289,7 +396,7 @@ function EntityCard({
           <input
             placeholder="Shade name (e.g. 2N, NC44, Pillow Talk)"
             value={shadeInput}
-            onChange={ev => onShadeInput(ev.target.value)}
+            onChange={(ev) => onShadeInput(ev.target.value)}
           />
           {willCreateNew && (
             <div style={{ fontSize: 10, color: 'var(--accent)', marginTop: 4 }}>
@@ -309,7 +416,13 @@ function EntityCard({
           className="primary"
           disabled={!canSave || isSaving}
           onClick={onSave}
-          title={!productId ? 'Pick a product' : !canSave ? 'Pick or type a shade' : ''}
+          title={
+            !productId
+              ? 'Pick a product'
+              : !canSave
+                ? 'Pick or type a shade'
+                : ''
+          }
         >
           {isSaving ? 'Saving…' : 'Save (link product + shade)'}
         </button>
@@ -341,46 +454,75 @@ function normalizeShadeName(s) {
 }
 
 function VideoInsights({ videos }) {
-  const ready = (videos ?? []).filter(v => v.nlp_result);
+  const ready = (videos ?? []).filter((v) => v.nlp_result);
   if (ready.length === 0) return null;
 
-  const shadeMatchVideos = ready.filter(v => v.nlp_result.is_shade_match_video === true);
+  const shadeMatchVideos = ready.filter(
+    (v) => v.nlp_result.is_shade_match_video === true,
+  );
   const audience = new Map();
   const sentiment = new Map();
   const skinToneLang = new Map();
   const selfDescriptions = new Set();
 
   for (const v of ready) {
-    for (const a of (v.nlp_result.audience_signals ?? []))      audience.set(a, (audience.get(a) ?? 0) + 1);
-    for (const s of (v.nlp_result.sentiment_descriptors ?? [])) sentiment.set(s, (sentiment.get(s) ?? 0) + 1);
-    for (const t of (v.nlp_result.skin_tone_language ?? []))    skinToneLang.set(t, (skinToneLang.get(t) ?? 0) + 1);
-    if (v.nlp_result.creator_self_description) selfDescriptions.add(v.nlp_result.creator_self_description);
+    for (const a of v.nlp_result.audience_signals ?? [])
+      audience.set(a, (audience.get(a) ?? 0) + 1);
+    for (const s of v.nlp_result.sentiment_descriptors ?? [])
+      sentiment.set(s, (sentiment.get(s) ?? 0) + 1);
+    for (const t of v.nlp_result.skin_tone_language ?? [])
+      skinToneLang.set(t, (skinToneLang.get(t) ?? 0) + 1);
+    if (v.nlp_result.creator_self_description)
+      selfDescriptions.add(v.nlp_result.creator_self_description);
   }
 
   const sortByCount = (m) => [...m.entries()].sort((a, b) => b[1] - a[1]);
 
   return (
-    <div style={{
-      marginTop: 14, padding: 12,
-      border: '1px solid var(--border)', borderRadius: 8,
-      background: 'var(--panel-2)',
-    }}>
-      <h2 style={{ marginTop: 0 }}>Video insights ({ready.length} processed)</h2>
+    <div
+      style={{
+        marginTop: 14,
+        padding: 12,
+        border: '1px solid var(--border)',
+        borderRadius: 8,
+        background: 'var(--panel-2)',
+      }}
+    >
+      <h2 style={{ marginTop: 0 }}>
+        Video insights ({ready.length} processed)
+      </h2>
 
       {selfDescriptions.size > 0 && (
         <div style={{ fontSize: 12, marginBottom: 10 }}>
-          <strong style={{ color: 'var(--muted)' }}>Creator self-described as:</strong>{' '}
+          <strong style={{ color: 'var(--muted)' }}>
+            Creator self-described as:
+          </strong>{' '}
           {[...selfDescriptions].join(' · ')}
         </div>
       )}
 
       {shadeMatchVideos.length > 0 && (
         <div style={{ marginBottom: 12 }}>
-          <div style={{ fontSize: 11, color: '#e8c5ff', marginBottom: 6, fontWeight: 600 }}>
+          <div
+            style={{
+              fontSize: 11,
+              color: '#e8c5ff',
+              marginBottom: 6,
+              fontWeight: 600,
+            }}
+          >
             ★ Shade match videos ({shadeMatchVideos.length})
           </div>
-          {shadeMatchVideos.map(v => (
-            <div key={v.id} style={{ fontSize: 11, color: 'var(--muted)', wordBreak: 'break-all', marginBottom: 4 }}>
+          {shadeMatchVideos.map((v) => (
+            <div
+              key={v.id}
+              style={{
+                fontSize: 11,
+                color: 'var(--muted)',
+                wordBreak: 'break-all',
+                marginBottom: 4,
+              }}
+            >
               {v.video_url}
             </div>
           ))}
@@ -389,17 +531,25 @@ function VideoInsights({ videos }) {
 
       {audience.size > 0 && (
         <Section label="Audience signals (who they're targeting)">
-          {sortByCount(audience).map(([phrase, n]) => <Tag key={phrase} text={phrase} count={n} highlight />)}
+          {sortByCount(audience).map(([phrase, n]) => (
+            <Tag key={phrase} text={phrase} count={n} highlight />
+          ))}
         </Section>
       )}
       {skinToneLang.size > 0 && (
         <Section label="Skin tone language">
-          {sortByCount(skinToneLang).map(([phrase, n]) => <Tag key={phrase} text={phrase} count={n} />)}
+          {sortByCount(skinToneLang).map(([phrase, n]) => (
+            <Tag key={phrase} text={phrase} count={n} />
+          ))}
         </Section>
       )}
       {sentiment.size > 0 && (
         <Section label="Performance phrases">
-          {sortByCount(sentiment).slice(0, 12).map(([phrase, n]) => <Tag key={phrase} text={phrase} count={n} />)}
+          {sortByCount(sentiment)
+            .slice(0, 12)
+            .map(([phrase, n]) => (
+              <Tag key={phrase} text={phrase} count={n} />
+            ))}
         </Section>
       )}
     </div>
@@ -409,24 +559,39 @@ function VideoInsights({ videos }) {
 function Section({ label, children }) {
   return (
     <div style={{ marginBottom: 10 }}>
-      <div style={{
-        fontSize: 10, textTransform: 'uppercase', letterSpacing: 0.5,
-        color: 'var(--muted)', fontWeight: 600, marginBottom: 6,
-      }}>{label}</div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{children}</div>
+      <div
+        style={{
+          fontSize: 10,
+          textTransform: 'uppercase',
+          letterSpacing: 0.5,
+          color: 'var(--muted)',
+          fontWeight: 600,
+          marginBottom: 6,
+        }}
+      >
+        {label}
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {children}
+      </div>
     </div>
   );
 }
 
 function Tag({ text, count, highlight }) {
   return (
-    <span style={{
-      fontSize: 11, padding: '3px 8px', borderRadius: 999,
-      background: highlight ? '#3a2c4a' : 'var(--panel)',
-      color: highlight ? '#e8c5ff' : 'var(--text)',
-      border: '1px solid var(--border)',
-    }}>
-      {text}{count > 1 ? ` ×${count}` : ''}
+    <span
+      style={{
+        fontSize: 11,
+        padding: '3px 8px',
+        borderRadius: 999,
+        background: highlight ? '#3a2c4a' : 'var(--panel)',
+        color: highlight ? '#e8c5ff' : 'var(--text)',
+        border: '1px solid var(--border)',
+      }}
+    >
+      {text}
+      {count > 1 ? ` ×${count}` : ''}
     </span>
   );
 }
@@ -435,7 +600,8 @@ function bestProductMatch(products, brandGuess, productGuess) {
   if (!brandGuess && !productGuess) return null;
   const bg = (brandGuess ?? '').trim().toLowerCase();
   const pg = (productGuess ?? '').trim().toLowerCase();
-  let best = null, bestScore = 0;
+  let best = null,
+    bestScore = 0;
   for (const p of products) {
     const pb = p.brand.toLowerCase();
     const pn = p.name.toLowerCase();
@@ -447,12 +613,15 @@ function bestProductMatch(products, brandGuess, productGuess) {
     if (pg) {
       if (pn === pg) score += 4;
       else {
-        const tokens = pg.split(/\W+/).filter(t => t.length >= 3);
-        const hits = tokens.filter(t => pn.includes(t)).length;
+        const tokens = pg.split(/\W+/).filter((t) => t.length >= 3);
+        const hits = tokens.filter((t) => pn.includes(t)).length;
         score += Math.min(hits, 3);
       }
     }
-    if (score > bestScore) { bestScore = score; best = p; }
+    if (score > bestScore) {
+      bestScore = score;
+      best = p;
+    }
   }
   return bestScore >= 2 ? best : null;
 }

@@ -7,23 +7,23 @@ class SkinToneOption {
   const SkinToneOption(this.label, this.color);
 
   String get hex =>
-      '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
+      '#${color.toARGB32().toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
 }
 
-// 12-step Fitzpatrick-ish scale used by onboarding + profile.
+// Twelve display swatches for selecting approximate skin depth.
 const kSkinToneScale = <SkinToneOption>[
-  SkinToneOption('porcelain',     Color(0xFFF6E1CE)),
-  SkinToneOption('fair',          Color(0xFFEFD0B6)),
-  SkinToneOption('light',         Color(0xFFE5BC9C)),
-  SkinToneOption('light-medium',  Color(0xFFD9A684)),
-  SkinToneOption('medium',        Color(0xFFC8916D)),
-  SkinToneOption('medium-tan',    Color(0xFFB57E58)),
-  SkinToneOption('tan',           Color(0xFF9B6745)),
-  SkinToneOption('tan-deep',      Color(0xFF845635)),
-  SkinToneOption('deep',          Color(0xFF6E4527)),
-  SkinToneOption('deep-rich',     Color(0xFF55351D)),
-  SkinToneOption('rich',          Color(0xFF3F2716)),
-  SkinToneOption('deepest',       Color(0xFF2C1A0F)),
+  SkinToneOption('porcelain', Color(0xFFF6E1CE)),
+  SkinToneOption('fair', Color(0xFFEFD0B6)),
+  SkinToneOption('light', Color(0xFFE5BC9C)),
+  SkinToneOption('light-medium', Color(0xFFD9A684)),
+  SkinToneOption('medium', Color(0xFFC8916D)),
+  SkinToneOption('medium-tan', Color(0xFFB57E58)),
+  SkinToneOption('tan', Color(0xFF9B6745)),
+  SkinToneOption('tan-deep', Color(0xFF845635)),
+  SkinToneOption('deep', Color(0xFF6E4527)),
+  SkinToneOption('deep-rich', Color(0xFF55351D)),
+  SkinToneOption('rich', Color(0xFF3F2716)),
+  SkinToneOption('deepest', Color(0xFF2C1A0F)),
 ];
 
 class ShadeSwatch extends StatelessWidget {
@@ -60,11 +60,16 @@ class ShadeSwatch extends StatelessWidget {
               width: selected ? 2 : 1,
             ),
             boxShadow: selected
-                ? [BoxShadow(color: AppPalette.roseDeep.withOpacity(.15), blurRadius: 8)]
+                ? [
+                    BoxShadow(
+                        color: AppPalette.roseDeep.withValues(alpha: .15),
+                        blurRadius: 8)
+                  ]
                 : null,
           ),
           child: color == null
-              ? Icon(Icons.help_outline, size: size * .5, color: AppPalette.textMuted)
+              ? Icon(Icons.help_outline,
+                  size: size * .5, color: AppPalette.textMuted)
               : null,
         ),
       ),

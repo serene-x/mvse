@@ -1,6 +1,7 @@
 // Compile-time env. Provide via --dart-define on flutter run/build:
 //   flutter run --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
 class Env {
+  static bool backendAvailable = false;
   static const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
   static const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 

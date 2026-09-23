@@ -1,54 +1,86 @@
+import '../../env.dart';
+import '../catalog.dart';
+import '../beauty_details.dart';
 import '../../core/supabase_client.dart';
 import '../models/models.dart';
 
 class ProductRepository {
-  // Discovery feed: products sorted by mention count, optional category filter.
-  Future<List<Product>> discoveryFeed({
-    ProductCategory? category,
-    int limit = 50,
-  }) async {
-    var q = sb
-        .from('product_with_mention_count')
-        .select('id, name, brand, category, sephora_url, ulta_url, mention_count');
-    if (category != null && category != ProductCategory.other) {
-      q = q.eq('category', category.name);
+  Future<List<Product>>? _catalog;
+  bool bundledOnly = !Env.backendAvailable;
+
+  void refresh() {
+    _catalog = null;
+  }
+
+  Future<List<Product>> catalog() => _catalog ??= _loadCatalog();
+
+  Future<List<Product>> _loadCatalog() async {
+    final local = await BundledCatalog.load();
+    if (!Env.backendAvailable) return local;
+    try {
+      final rows = await sb
+          .from('product_with_mention_count')
+          .select()
+          .order('name')
+          .limit(1000)
+          .timeout(const Duration(seconds: 5));
+      final merged = {for (final p in local) BundledCatalog.key(p): p};
+      for (final row in rows) {
+        final p = Product.fromMap(row);
+        merged[BundledCatalog.key(p)] = p;
+      }
+      bundledOnly = rows.isEmpty;
+      return merged.values.toList();
+    } catch (_) {
+      bundledOnly = true;
+      return local;
     }
-    final rows = await q.order('mention_count', ascending: false).limit(limit);
-    return (rows as List)
-        .map((r) => Product.fromMap(Map<String, dynamic>.from(r as Map)))
+  }
+
+  Future<List<Product>> discoveryFeed(
+      {ProductCategory? category, int limit = 1000}) async {
+    final products = await catalog();
+    return products
+        .where((p) =>
+            category == null ||
+            (category == ProductCategory.skincare
+                ? isSkincare(p.category)
+                : p.category == category))
+        .take(limit)
         .toList();
   }
 
-  // For You: products from user's twin creators that the user doesn't own.
-  Future<List<Product>> forYouFeed({required String userId, int limit = 50}) async {
-    final rows = await sb.rpc('recommended_products_for_user', params: {
-      'p_user_id': userId,
-      'p_limit': limit,
-    });
-    return (rows as List).map((r) {
-      final m = Map<String, dynamic>.from(r as Map);
-      return Product(
-        id: m['id'] as String,
-        name: m['name'] as String,
-        brand: m['brand'] as String,
-        category: categoryFromString(m['category'] as String?),
-        sephoraUrl: m['sephora_url'] as String?,
-        ultaUrl: m['ulta_url'] as String?,
-        mentionCount: (m['total_mentions'] as int?) ?? 0,
-      );
-    }).toList();
-  }
-
   Future<Product?> fetchProduct(String id) async {
+    final products = await catalog();
+    for (final product in products) {
+      if (product.id == id) return product;
+    }
+    // A bookmarked bundled URL also resolves when a live row replaces it.
+    for (final product in await BundledCatalog.load()) {
+      if (product.id == id) return product;
+    }
+    if (!Env.backendAvailable || BundledCatalog.isLocal(id)) return null;
     final row = await sb
         .from('product_with_mention_count')
-        .select('id, name, brand, category, sephora_url, ulta_url, mention_count')
+        .select()
         .eq('id', id)
         .maybeSingle();
     return row == null ? null : Product.fromMap(row);
   }
 
   Future<List<ProductShade>> fetchShades(String productId) async {
+    final product = await fetchProduct(productId);
+    if (product != null && isSkincare(product.category)) return [];
+    final details = await loadBeautyDetails();
+    final listed =
+        product == null ? null : details[BundledCatalog.key(product)];
+    if (listed != null && listed.shades.isNotEmpty) {
+      return listed.shades
+          .map((s) =>
+              ProductShade(id: s.name, productId: productId, shadeName: s.name))
+          .toList();
+    }
+    if (!Env.backendAvailable || BundledCatalog.isLocal(productId)) return [];
     final rows = await sb
         .from('product_shades')
         .select('id, product_id, shade_name, hex_color')
@@ -59,43 +91,6 @@ class ProductRepository {
         .toList();
   }
 
-  Future<List<TikTokMention>> fetchMentions(String productId, {int limit = 3}) async {
-    final rows = await sb
-        .from('tiktok_mentions')
-        .select('id, product_id, video_url, sentiment_tags, view_count, thumbnail_url, created_at')
-        .eq('product_id', productId)
-        .order('view_count', ascending: false)
-        .limit(limit);
-    return (rows as List)
-        .map((r) => TikTokMention.fromMap(Map<String, dynamic>.from(r as Map)))
-        .toList();
-  }
-
-  Future<List<SentimentTag>> fetchTopSentiments(String productId, {int top = 5}) async {
-    final rows = await sb
-        .from('product_top_sentiments')
-        .select('tag, cnt')
-        .eq('product_id', productId)
-        .order('cnt', ascending: false)
-        .limit(top);
-    return (rows as List)
-        .map((r) {
-          final m = Map<String, dynamic>.from(r as Map);
-          return SentimentTag(tag: m['tag'] as String, count: (m['cnt'] as int?) ?? 0);
-        })
-        .toList();
-  }
-
-  Future<YourShade?> fetchYourShade({required String userId, required String productId}) async {
-    final rows = await sb.rpc('your_shade_for_product', params: {
-      'p_user_id': userId,
-      'p_product_id': productId,
-    });
-    final list = rows as List;
-    if (list.isEmpty) return null;
-    return YourShade.fromMap(Map<String, dynamic>.from(list.first as Map));
-  }
-
   // Search across product name + brand. "hasMyShade" filter optionally
   // restricts to products with at least one shade entry that the user owns.
   Future<List<Product>> search({
@@ -103,21 +98,13 @@ class ProductRepository {
     ProductCategory? category,
     String? userIdForOwnedShade,
   }) async {
-    var q = sb
-        .from('product_with_mention_count')
-        .select('id, name, brand, category, sephora_url, ulta_url, mention_count');
-    final clean = query.trim();
-    if (clean.isNotEmpty) {
-      // Postgres ilike OR pattern for name/brand.
-      q = q.or('name.ilike.%$clean%,brand.ilike.%$clean%');
-    }
-    if (category != null && category != ProductCategory.other) {
-      q = q.eq('category', category.name);
-    }
-    final rows = await q.order('mention_count', ascending: false).limit(80);
-    final products = (rows as List)
-        .map((r) => Product.fromMap(Map<String, dynamic>.from(r as Map)))
-        .toList();
+    final words = query.toLowerCase().trim().split(RegExp(r'\s+'));
+    final all = await discoveryFeed(category: category);
+    final products = all.where((p) {
+      final text =
+          '${p.brand} ${p.name} ${categoryLabel(p.category)}'.toLowerCase();
+      return words.every(text.contains);
+    }).toList();
 
     if (userIdForOwnedShade == null) return products;
 

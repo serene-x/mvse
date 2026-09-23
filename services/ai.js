@@ -7,16 +7,20 @@ const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
 let cached;
 function client() {
   if (cached) return cached;
-  if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY missing');
+  if (!process.env.ANTHROPIC_API_KEY)
+    throw new Error('ANTHROPIC_API_KEY missing');
   cached = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   return cached;
 }
 
 function imageBlock(filePath) {
   const ext = path.extname(filePath).toLowerCase();
-  const mediaType = ext === '.png' ? 'image/png'
-    : ext === '.webp' ? 'image/webp'
-    : 'image/jpeg';
+  const mediaType =
+    ext === '.png'
+      ? 'image/png'
+      : ext === '.webp'
+        ? 'image/webp'
+        : 'image/jpeg';
   return {
     type: 'image',
     source: {
@@ -28,7 +32,10 @@ function imageBlock(filePath) {
 }
 
 function parseJson(text) {
-  const trimmed = text.trim().replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '');
+  const trimmed = text
+    .trim()
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/```\s*$/, '');
   return JSON.parse(trimmed);
 }
 
@@ -47,24 +54,33 @@ or packaging information. Reply with STRICT JSON only — no prose, no markdown 
 Confidence is 0..1. Use null when unsure. Do not hallucinate brands.`;
 
 async function extractFromFrames(framePaths, { videoUrl } = {}) {
-  if (!framePaths?.length) return { products: [], packaging_text: [], notes: 'no frames' };
+  if (!framePaths?.length)
+    return { products: [], packaging_text: [], notes: 'no frames' };
 
   const resp = await client().messages.create({
     model: MODEL,
     max_tokens: 1024,
     system: VISION_SYSTEM,
-    messages: [{
-      role: 'user',
-      content: [
-        ...framePaths.map(imageBlock),
-        { type: 'text', text: `Source video: ${videoUrl ?? '(unknown)'}\nReturn JSON.` },
-      ],
-    }],
+    messages: [
+      {
+        role: 'user',
+        content: [
+          ...framePaths.map(imageBlock),
+          {
+            type: 'text',
+            text: `Source video: ${videoUrl ?? '(unknown)'}\nReturn JSON.`,
+          },
+        ],
+      },
+    ],
   });
 
-  const text = resp.content.find(b => b.type === 'text')?.text ?? '{}';
-  try { return parseJson(text); }
-  catch { return { products: [], packaging_text: [], notes: text }; }
+  const text = resp.content.find((b) => b.type === 'text')?.text ?? '{}';
+  try {
+    return parseJson(text);
+  } catch {
+    return { products: [], packaging_text: [], notes: text };
+  }
 }
 
 const NLP_SYSTEM = `You are an NLP extractor for a beauty curation tool. You receive
@@ -101,10 +117,17 @@ Field guidance:
 
 Empty arrays / null when nothing applies. Never invent.`;
 
-async function extractFromTextSignals({ caption, comments = [], transcript = null }) {
+async function extractFromTextSignals({
+  caption,
+  comments = [],
+  transcript = null,
+}) {
   const commentBlock = comments
     .slice(0, 50)
-    .map((c, i) => `${i + 1}. (@${c.author ?? 'anon'}, ${c.like_count ?? 0} likes) ${c.text ?? ''}`)
+    .map(
+      (c, i) =>
+        `${i + 1}. (@${c.author ?? 'anon'}, ${c.like_count ?? 0} likes) ${c.text ?? ''}`,
+    )
     .join('\n');
 
   const userMsg = [
@@ -120,13 +143,17 @@ async function extractFromTextSignals({ caption, comments = [], transcript = nul
     messages: [{ role: 'user', content: [{ type: 'text', text: userMsg }] }],
   });
 
-  const text = resp.content.find(b => b.type === 'text')?.text ?? '{}';
-  try { return parseJson(text); }
-  catch {
+  const text = resp.content.find((b) => b.type === 'text')?.text ?? '{}';
+  try {
+    return parseJson(text);
+  } catch {
     return {
-      products: [], shades: [],
-      sentiment_descriptors: [], skin_tone_language: [],
-      audience_signals: [], is_shade_match_video: false,
+      products: [],
+      shades: [],
+      sentiment_descriptors: [],
+      skin_tone_language: [],
+      audience_signals: [],
+      is_shade_match_video: false,
       creator_self_description: null,
       notes: text,
     };
@@ -163,17 +190,32 @@ async function findProductOnline(brand, productName) {
     max_tokens: 1024,
     system: FIND_PRODUCT_SYSTEM,
     tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 3 }],
-    messages: [{
-      role: 'user',
-      content: [{ type: 'text', text: `Brand: ${brand}\nProduct: ${productName}\n\nFind this on sephora.com or ulta.com.` }],
-    }],
+    messages: [
+      {
+        role: 'user',
+        content: [
+          {
+            type: 'text',
+            text: `Brand: ${brand}\nProduct: ${productName}\n\nFind this on sephora.com or ulta.com.`,
+          },
+        ],
+      },
+    ],
   });
 
-  const textBlocks = resp.content.filter(b => b.type === 'text');
+  const textBlocks = resp.content.filter((b) => b.type === 'text');
   const finalText = textBlocks.at(-1)?.text ?? '{}';
 
-  try { return parseJson(finalText); }
-  catch { return { found: false, confidence: 0, notes: finalText.slice(0, 500) }; }
+  try {
+    return parseJson(finalText);
+  } catch {
+    return { found: false, confidence: 0, notes: finalText.slice(0, 500) };
+  }
 }
 
-module.exports = { MODEL, extractFromFrames, extractFromTextSignals, findProductOnline };
+module.exports = {
+  MODEL,
+  extractFromFrames,
+  extractFromTextSignals,
+  findProductOnline,
+};

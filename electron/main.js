@@ -1,7 +1,12 @@
-require('dotenv').config();
 const { app, BrowserWindow, BrowserView, ipcMain, shell } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs');
+
+require('dotenv').config({
+  path: app.isPackaged
+    ? path.join(app.getPath('userData'), '.env')
+    : path.join(__dirname, '..', '.env'),
+});
 
 const queue = require('../services/queue');
 const sb = require('../services/supabase');
@@ -37,7 +42,10 @@ function createWindow() {
 
   attachTikTokView();
   mainWindow.on('resize', layoutViews);
-  mainWindow.on('closed', () => { mainWindow = null; tiktokView = null; });
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+    tiktokView = null;
+  });
 }
 
 function attachTikTokView() {
@@ -53,8 +61,12 @@ function attachTikTokView() {
   layoutViews();
   tiktokView.webContents.loadURL(TIKTOK_URL);
 
-  const contentScript = fs.readFileSync(path.join(__dirname, 'contentScript.js'), 'utf8');
-  const inject = () => tiktokView.webContents.executeJavaScript(contentScript).catch(() => {});
+  const contentScript = fs.readFileSync(
+    path.join(__dirname, 'contentScript.js'),
+    'utf8',
+  );
+  const inject = () =>
+    tiktokView.webContents.executeJavaScript(contentScript).catch(() => {});
   tiktokView.webContents.on('did-finish-load', inject);
   tiktokView.webContents.on('did-navigate-in-page', inject);
 
@@ -82,18 +94,22 @@ ipcMain.on('tiktok:videoCaptured', async (_evt, payload) => {
   try {
     const video = await queue.enqueue(payload);
     if (video && mainWindow) {
-      mainWindow.webContents.send('queue:enqueued', { id: video.id, url: video.video_url });
+      mainWindow.webContents.send('queue:enqueued', {
+        id: video.id,
+        url: video.video_url,
+      });
     }
   } catch (err) {
     console.error('enqueue failed', err);
-    if (mainWindow) mainWindow.webContents.send('queue:error', { error: err.message });
+    if (mainWindow)
+      mainWindow.webContents.send('queue:error', { error: err.message });
   }
 });
 
 ipcMain.handle('admin:captureCurrent', async () => {
   if (!tiktokView) throw new Error('TikTok view not ready');
   return tiktokView.webContents.executeJavaScript(
-    'window.__mvseCapture && window.__mvseCapture()'
+    'window.__mvseCapture && window.__mvseCapture()',
   );
 });
 
@@ -102,16 +118,29 @@ ipcMain.handle('admin:openTikTokDevTools', () => {
   tiktokView.webContents.openDevTools({ mode: 'detach' });
 });
 
-ipcMain.handle('admin:confirmEntity', async (_evt, { id, productId, shadeId }) => {
-  const { error } = await sb.admin().from('extracted_entities')
-    .update({ reviewed: true, product_id: productId ?? null, shade_id: shadeId ?? null })
-    .eq('id', id);
-  if (error) throw error;
-  return { ok: true };
-});
+ipcMain.handle(
+  'admin:confirmEntity',
+  async (_evt, { id, productId, shadeId }) => {
+    const { error } = await sb
+      .admin()
+      .from('extracted_entities')
+      .update({
+        reviewed: true,
+        product_id: productId ?? null,
+        shade_id: shadeId ?? null,
+      })
+      .eq('id', id);
+    if (error) throw error;
+    return { ok: true };
+  },
+);
 
-ipcMain.handle('admin:upsertProduct', (_evt, fields) => sb.upsertProduct(fields));
-ipcMain.handle('admin:updateProduct', (_evt, { id, fields }) => sb.updateProduct(id, fields));
+ipcMain.handle('admin:upsertProduct', (_evt, fields) =>
+  sb.upsertProduct(fields),
+);
+ipcMain.handle('admin:updateProduct', (_evt, { id, fields }) =>
+  sb.updateProduct(id, fields),
+);
 ipcMain.handle('admin:addShade', (_evt, { productId, shadeName, hexColor }) =>
   sb.addShade(productId, shadeName, hexColor),
 );
@@ -122,8 +151,12 @@ ipcMain.handle('admin:linkMention', async (_evt, args) => {
 
   // tiktok_mentions.video_url is NOT NULL; fall back to the video's URL.
   if ((!videoUrl || viewCount == null) && videoId) {
-    const { data: vid } = await sb.admin()
-      .from('tiktok_videos').select('video_url, view_count').eq('id', videoId).single();
+    const { data: vid } = await sb
+      .admin()
+      .from('tiktok_videos')
+      .select('video_url, view_count')
+      .eq('id', videoId)
+      .single();
     if (vid) {
       videoUrl = videoUrl ?? vid.video_url;
       viewCount = viewCount ?? vid.view_count;
@@ -131,32 +164,45 @@ ipcMain.handle('admin:linkMention', async (_evt, args) => {
   }
   if (!videoUrl) throw new Error('linkMention requires a video_url');
 
-  const { data, error } = await sb.admin().from('tiktok_mentions').insert({
-    product_id: productId,
-    video_id: videoId,
-    video_url: videoUrl,
-    view_count: viewCount ?? 0,
-    sentiment_tags: sentimentTags ?? [],
-    confirmed: true,
-  }).select().single();
+  const { data, error } = await sb
+    .admin()
+    .from('tiktok_mentions')
+    .insert({
+      product_id: productId,
+      video_id: videoId,
+      video_url: videoUrl,
+      view_count: viewCount ?? 0,
+      sentiment_tags: sentimentTags ?? [],
+      confirmed: true,
+    })
+    .select()
+    .single();
   if (error) throw error;
   if (shadeName) await sb.addShade(productId, shadeName, hexColor ?? null);
   return data;
 });
 
-ipcMain.handle('admin:saveShadeTwin', async (_evt, { creatorAId, creatorBId, confidence }) => {
-  await sb.saveShadeTwin(creatorAId, creatorBId, confidence, true);
-  return { ok: true };
-});
+ipcMain.handle(
+  'admin:saveShadeTwin',
+  async (_evt, { creatorAId, creatorBId, confidence }) => {
+    await sb.saveShadeTwin(creatorAId, creatorBId, confidence, true);
+    return { ok: true };
+  },
+);
 
 ipcMain.handle('admin:updateCreator', async (_evt, { id, fields }) => {
-  const { data, error } = await sb.admin()
-    .from('creators').update(fields).eq('id', id).select().single();
+  const { data, error } = await sb
+    .admin()
+    .from('creators')
+    .update(fields)
+    .eq('id', id)
+    .select()
+    .single();
   if (error) throw error;
   return data;
 });
 
-queue.setLogger(entry => {
+queue.setLogger((entry) => {
   if (mainWindow) mainWindow.webContents.send('queue:log', entry);
 });
 
@@ -175,3 +221,7 @@ app.whenReady().then(async () => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
+
+ipcMain.handle('admin:saveManualShadeReport', (_evt, input) =>
+  require('../services/manualShadeReports').saveManualReport(input),
+);

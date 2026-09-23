@@ -2,7 +2,7 @@
   "name": "mvse-admin",
   "version": "0.1.0",
   "private": true,
-  "description": "mvse — admin tool for curating the mvse beauty product database from TikTok.",
+  "description": "MVSE catalogue and shade-report admin",
   "main": "electron/main.js",
   "scripts": {
     "dev:renderer": "vite",
@@ -12,7 +12,13 @@
     "build": "npm run build:renderer && electron-builder",
     "build:mac": "npm run build:renderer && electron-builder --mac",
     "build:win": "npm run build:renderer && electron-builder --win",
-    "start": "electron ."
+    "start": "electron .",
+    "app": "node scripts/run-consumer.cjs",
+    "app:build": "node scripts/run-consumer.cjs --build",
+    "test": "node --test tests/*.test.cjs",
+    "test:accounts": "node tests/account-storage.integration.cjs",
+    "format": "prettier --write \"{electron,services,src}/**/*.{js,jsx,css}\" \"scripts/*.cjs\" \"tests/*.cjs\" \"*.{js,mjs,json,md}\"",
+    "format:check": "prettier --check \"{electron,services,src}/**/*.{js,jsx,css}\" \"scripts/*.cjs\" \"tests/*.cjs\" \"*.{js,mjs,json,md}\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.30.0",
@@ -30,6 +36,7 @@
     "cross-env": "^7.0.3",
     "electron": "^32.0.0",
     "electron-builder": "^25.0.0",
+    "prettier": "3.6.2",
     "vite": "^5.4.0",
     "wait-on": "^8.0.0"
   },
@@ -42,9 +49,6 @@
       "dist/**/*",
       "package.json"
     ],
-    "extraResources": [
-      ".env"
-    ],
     "mac": {
       "target": "dmg",
       "category": "public.app-category.utilities"
@@ -52,5 +56,9 @@
     "win": {
       "target": "nsis"
     }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }

@@ -3,29 +3,39 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(__dirname, '.env'), 'utf8')
+  fs
+    .readFileSync(path.join(__dirname, '.env'), 'utf8')
     .split('\n')
-    .map(l => l.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/))
+    .map((l) => l.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/))
     .filter(Boolean)
-    .map(m => [m[1], m[2].replace(/^['"]|['"]$/g, '')])
+    .map((m) => [m[1], m[2].replace(/^['"]|['"]$/g, '')]),
 );
 
-const REF = (env.SUPABASE_URL.match(/https:\/\/([a-z0-9]+)\.supabase\.co/) || [])[1];
+const REF = (env.SUPABASE_URL.match(/https:\/\/([a-z0-9]+)\.supabase\.co/) ||
+  [])[1];
 const ENDPOINT = `https://api.supabase.com/v1/projects/${REF}/database/query`;
 
 async function sql(query) {
   const r = await fetch(ENDPOINT, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${env.SUPABASE_ACCESS_TOKEN}`, 'Content-Type': 'application/json' },
+    headers: {
+      Authorization: `Bearer ${env.SUPABASE_ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ query }),
   });
-  if (!r.ok) { console.error(await r.text()); process.exit(1); }
+  if (!r.ok) {
+    console.error(await r.text());
+    process.exit(1);
+  }
   return r.json();
 }
 
 (async () => {
   // Status counts
-  const counts = await sql(`select status, count(*)::int as n from tiktok_videos group by status order by n desc;`);
+  const counts = await sql(
+    `select status, count(*)::int as n from tiktok_videos group by status order by n desc;`,
+  );
   console.log('--- video status ---');
   for (const r of counts) console.log(`  ${r.status.padEnd(14)} ${r.n}`);
 
@@ -43,15 +53,23 @@ async function sql(query) {
   `);
   for (const v of videos) {
     console.log(`\n@${v.creator_handle}  ${v.video_url}`);
-    console.log(`  transcript (${v.transcript_len} chars): ${v.transcript_head?.replace(/\n/g,' ')}`);
+    console.log(
+      `  transcript (${v.transcript_len} chars): ${v.transcript_head?.replace(/\n/g, ' ')}`,
+    );
     const r = v.nlp_result || {};
     console.log(`  products:        ${JSON.stringify(r.products ?? [])}`);
     console.log(`  shades:          ${JSON.stringify(r.shades ?? [])}`);
-    console.log(`  sentiment:       ${JSON.stringify(r.sentiment_descriptors ?? [])}`);
-    console.log(`  skin_tone_lang:  ${JSON.stringify(r.skin_tone_language ?? [])}`);
-    if (r.audience_signals)        console.log(`  audience:        ${JSON.stringify(r.audience_signals)}`);
-    if (r.is_shade_match_video)    console.log(`  ★ shade match video: yes`);
-    if (r.creator_self_description) console.log(`  creator says:    ${r.creator_self_description}`);
+    console.log(
+      `  sentiment:       ${JSON.stringify(r.sentiment_descriptors ?? [])}`,
+    );
+    console.log(
+      `  skin_tone_lang:  ${JSON.stringify(r.skin_tone_language ?? [])}`,
+    );
+    if (r.audience_signals)
+      console.log(`  audience:        ${JSON.stringify(r.audience_signals)}`);
+    if (r.is_shade_match_video) console.log(`  ★ shade match video: yes`);
+    if (r.creator_self_description)
+      console.log(`  creator says:    ${r.creator_self_description}`);
   }
 
   // Sample extracted_entities
@@ -66,8 +84,10 @@ async function sql(query) {
   for (const e of ents) {
     const tag = e.source.padEnd(12);
     const brand = (e.brand_guess ?? '—').padEnd(20);
-    const prod  = (e.product_guess ?? '—').padEnd(40);
+    const prod = (e.product_guess ?? '—').padEnd(40);
     const shade = (e.shade_guess ?? '—').padEnd(15);
-    console.log(`  ${tag} ${brand} ${prod} ${shade} ${e.raw_head?.replace(/\n/g,' ') ?? ''}`);
+    console.log(
+      `  ${tag} ${brand} ${prod} ${shade} ${e.raw_head?.replace(/\n/g, ' ') ?? ''}`,
+    );
   }
 })();

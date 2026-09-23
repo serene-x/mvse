@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../providers/providers.dart';
+import '../../env.dart';
 import '../../theme.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -18,19 +19,38 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   String? _error;
   bool _checkInbox = false;
 
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
   Future<void> _signUp() async {
+    if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(_email.text.trim()) ||
+        _password.text.length < 8) {
+      setState(() => _error =
+          'Enter a valid email and a password of at least 8 characters.');
+      return;
+    }
     final auth = ref.read(authRepositoryProvider);
-    setState(() { _busy = true; _error = null; });
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
     try {
       await auth.signUpWithEmail(_email.text.trim(), _password.text);
       // If email confirm is on, user must verify; if off, session is set.
       if (auth.currentSession != null) {
         if (mounted) context.go('/onboarding');
       } else {
-        setState(() => _checkInbox = true);
+        if (mounted) setState(() => _checkInbox = true);
       }
     } catch (e) {
-      setState(() => _error = e.toString());
+      if (mounted) {
+        setState(() => _error =
+            'Unable to create your account. Check your details and connection, then try again.');
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -44,16 +64,22 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 420),
-            child: Padding(
+            child: SingleChildScrollView(
+                child: Padding(
               padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text('Create account',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 16),
-
+                  if (!Env.backendAvailable)
+                    TextButton(
+                        onPressed: () => context.go('/discovery'),
+                        child: const Text(
+                            'Accounts are unavailable. Continue browsing')),
                   if (_checkInbox)
                     const Text(
                       'Check your inbox to verify your email, then sign in.',
@@ -69,15 +95,19 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     TextField(
                       controller: _password,
                       obscureText: true,
-                      decoration: const InputDecoration(labelText: 'Password (min 8 chars)'),
+                      decoration: const InputDecoration(
+                          labelText: 'Password (min 8 chars)'),
                     ),
                     if (_error != null) ...[
                       const SizedBox(height: 10),
-                      Text(_error!, style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
+                      Text(_error!,
+                          style: const TextStyle(
+                              color: Colors.redAccent, fontSize: 12)),
                     ],
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: _busy ? null : _signUp,
+                      onPressed:
+                          _busy || !Env.backendAvailable ? null : _signUp,
                       child: const Text('Create account'),
                     ),
                   ],
@@ -88,7 +118,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                 ],
               ),
-            ),
+            )),
           ),
         ),
       ),

@@ -22,7 +22,8 @@ class UndertoneStep extends ConsumerWidget {
         const SizedBox(height: 20),
         UndertonePicker(
           selected: selected,
-          onChanged: (u) => ref.read(onboardingProvider.notifier).setUndertone(u),
+          onChanged: (u) =>
+              ref.read(onboardingProvider.notifier).setUndertone(u),
         ),
       ],
     );

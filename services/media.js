@@ -11,9 +11,11 @@ function run(cmd, args) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'] });
     let stderr = '';
-    child.stderr.on('data', d => { stderr += d.toString(); });
+    child.stderr.on('data', (d) => {
+      stderr += d.toString();
+    });
     child.on('error', reject);
-    child.on('close', code => {
+    child.on('close', (code) => {
       if (code === 0) resolve();
       else reject(new Error(`${cmd} exited ${code}: ${stderr.slice(-2000)}`));
     });
@@ -32,10 +34,14 @@ async function downloadVideo(videoUrl, videoId) {
   // then breaks Whisper. Demand audio explicitly and let yt-dlp merge.
   await run(YTDLP, [
     '--no-playlist',
-    '--ffmpeg-location', ffmpegPath,
-    '-f', 'best[acodec!=none][vcodec!=none]/bv*+ba/best',
-    '--merge-output-format', 'mp4',
-    '-o', outPath,
+    '--ffmpeg-location',
+    ffmpegPath,
+    '-f',
+    'best[acodec!=none][vcodec!=none]/bv*+ba/best',
+    '--merge-output-format',
+    'mp4',
+    '-o',
+    outPath,
     videoUrl,
   ]);
   return outPath;
@@ -45,8 +51,16 @@ async function extractAudio(videoPath) {
   const audioPath = videoPath.replace(/\.mp4$/, '.m4a');
   try {
     await run(ffmpegPath, [
-      '-y', '-i', videoPath,
-      '-vn', '-ac', '1', '-ar', '16000', '-c:a', 'aac',
+      '-y',
+      '-i',
+      videoPath,
+      '-vn',
+      '-ac',
+      '1',
+      '-ar',
+      '16000',
+      '-c:a',
+      'aac',
       audioPath,
     ]);
     return audioPath;
@@ -66,8 +80,15 @@ async function extractFrames(videoPath, n = 3) {
   for (const [idx, t] of stamps.entries()) {
     const framePath = path.join(dir, `frame_${idx}.jpg`);
     await run(ffmpegPath, [
-      '-y', '-ss', String(t), '-i', videoPath,
-      '-frames:v', '1', '-q:v', '3',
+      '-y',
+      '-ss',
+      String(t),
+      '-i',
+      videoPath,
+      '-frames:v',
+      '1',
+      '-q:v',
+      '3',
       framePath,
     ]);
     paths.push(framePath);
@@ -77,13 +98,17 @@ async function extractFrames(videoPath, n = 3) {
 
 function readDuration(videoPath) {
   return new Promise((resolve, reject) => {
-    const child = spawn(ffmpegPath, ['-i', videoPath], { stdio: ['ignore', 'ignore', 'pipe'] });
+    const child = spawn(ffmpegPath, ['-i', videoPath], {
+      stdio: ['ignore', 'ignore', 'pipe'],
+    });
     let buf = '';
-    child.stderr.on('data', d => { buf += d.toString(); });
+    child.stderr.on('data', (d) => {
+      buf += d.toString();
+    });
     child.on('close', () => {
       const m = buf.match(/Duration:\s*(\d+):(\d+):(\d+\.\d+)/);
       if (!m) return resolve(10);
-      resolve((+m[1]) * 3600 + (+m[2]) * 60 + (+m[3]));
+      resolve(+m[1] * 3600 + +m[2] * 60 + +m[3]);
     });
     child.on('error', reject);
   });

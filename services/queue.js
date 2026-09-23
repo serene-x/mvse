@@ -47,9 +47,13 @@ async function tick() {
         await processVideo(video);
       } catch (err) {
         log('error', video.id, err.message);
-        await sb.setVideoStatus(video.id, 'failed', { error: err.message?.slice(0, 2000) });
+        await sb.setVideoStatus(video.id, 'failed', {
+          error: err.message?.slice(0, 2000),
+        });
       } finally {
-        try { media.cleanup(video.id); } catch {}
+        try {
+          media.cleanup(video.id);
+        } catch {}
       }
     }
   } finally {
@@ -89,28 +93,32 @@ async function processVideo(video) {
   if (needsVision) {
     await sb.setVideoStatus(id, 'vision');
     const framePaths = await media.extractFrames(videoPath, 3);
-    visionResult = (await ai.extractFromFrames(framePaths, { videoUrl: video_url })) || {};
+    visionResult =
+      (await ai.extractFromFrames(framePaths, { videoUrl: video_url })) || {};
     await sb.setVideoFields(id, {
       vision_result: visionResult,
-      frames: framePaths.map(p => ({ path: p })),
+      frames: framePaths.map((p) => ({ path: p })),
     });
   }
 
   let nlpResult = video.nlp_result;
   if (needsNlp) {
     await sb.setVideoStatus(id, 'nlp');
-    nlpResult = (await ai.extractFromTextSignals({
-      transcript: transcript || null,
-      caption: caption ?? '',
-      comments: top_comments ?? [],
-    })) || {};
+    nlpResult =
+      (await ai.extractFromTextSignals({
+        transcript: transcript || null,
+        caption: caption ?? '',
+        comments: top_comments ?? [],
+      })) || {};
     await sb.setVideoFields(id, { nlp_result: nlpResult });
   }
 
   await autoDiscoverProducts(id, visionResult, nlpResult);
 
   await sb.deleteUnreviewedEntities(id);
-  await sb.insertExtractedEntities(buildEntityRows(id, transcript, visionResult, nlpResult));
+  await sb.insertExtractedEntities(
+    buildEntityRows(id, transcript, visionResult, nlpResult),
+  );
   await sb.setVideoStatus(id, 'ready');
 }
 
@@ -119,10 +127,15 @@ function buildEntityRows(videoId, transcript, vision, nlp) {
   const sentiments = nlp?.sentiment_descriptors ?? [];
 
   if (transcript) {
-    rows.push({ video_id: videoId, source: 'whisper', raw_text: transcript, sentiment_tags: [] });
+    rows.push({
+      video_id: videoId,
+      source: 'whisper',
+      raw_text: transcript,
+      sentiment_tags: [],
+    });
   }
 
-  for (const p of (vision?.products ?? [])) {
+  for (const p of vision?.products ?? []) {
     rows.push({
       video_id: videoId,
       source: 'vision',
@@ -134,18 +147,19 @@ function buildEntityRows(videoId, transcript, vision, nlp) {
     });
   }
 
-  for (const p of (nlp?.products ?? [])) {
+  for (const p of nlp?.products ?? []) {
     rows.push({
       video_id: videoId,
       source: 'caption_nlp',
       brand_guess: p.brand ?? null,
       product_guess: p.product_name ?? null,
       sentiment_tags: sentiments,
-      skin_tone_language: (nlp.skin_tone_language ?? []).join(' | ').slice(0, 1000) || null,
+      skin_tone_language:
+        (nlp.skin_tone_language ?? []).join(' | ').slice(0, 1000) || null,
     });
   }
 
-  for (const s of (nlp?.shades ?? [])) {
+  for (const s of nlp?.shades ?? []) {
     rows.push({
       video_id: videoId,
       source: 'caption_nlp',
@@ -161,7 +175,7 @@ function buildEntityRows(videoId, transcript, vision, nlp) {
 
 async function autoDiscoverProducts(videoId, vision, nlp) {
   const candidates = new Map();
-  const collect = p => {
+  const collect = (p) => {
     const brand = (p?.brand ?? '').trim();
     const name = (p?.product_name ?? '').trim();
     if (!brand || !name) return;
@@ -169,9 +183,9 @@ async function autoDiscoverProducts(videoId, vision, nlp) {
     if (!candidates.has(key)) candidates.set(key, { brand, name });
   };
 
-  for (const p of (vision?.products ?? [])) collect(p);
-  for (const p of (nlp?.products ?? [])) collect(p);
-  for (const p of (nlp?.shades ?? [])) collect(p);
+  for (const p of vision?.products ?? []) collect(p);
+  for (const p of nlp?.products ?? []) collect(p);
+  for (const p of nlp?.shades ?? []) collect(p);
   if (candidates.size === 0) return;
 
   for (const [, { brand, name }] of candidates) {
@@ -200,7 +214,8 @@ async function autoDiscoverProducts(videoId, vision, nlp) {
 
 async function rehydrate() {
   const stuck = ['downloading', 'transcribing', 'vision', 'nlp', 'queued'];
-  const { data, error } = await sb.admin()
+  const { data, error } = await sb
+    .admin()
     .from('tiktok_videos')
     .select('*')
     .in('status', stuck)
@@ -212,7 +227,9 @@ async function rehydrate() {
     if (seenUrls.has(video.video_url)) continue;
     seenUrls.add(video.video_url);
     if (video.status !== 'queued') {
-      try { await sb.setVideoStatus(video.id, 'queued', { error: null }); } catch {}
+      try {
+        await sb.setVideoStatus(video.id, 'queued', { error: null });
+      } catch {}
     }
     queue.push(video);
     count++;

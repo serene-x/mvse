@@ -1,0 +1,19 @@
+{
+  "name": "mvse",
+  "short_name": "mvse",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#435347",
+  "theme_color": "#435347",
+  "description": "Discover makeup and skincare, and keep your favourites on your own beauty shelf.",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

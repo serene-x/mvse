@@ -3,9 +3,7 @@
 
 create extension if not exists "pgcrypto";
 
--- =========================================================
 -- tiktok_videos: canonical record per captured TikTok video
--- =========================================================
 create table if not exists public.tiktok_videos (
   id uuid primary key default gen_random_uuid(),
   video_url text not null unique,
@@ -33,23 +31,17 @@ create trigger tiktok_videos_set_updated_at
   before update on public.tiktok_videos
   for each row execute function public.tg_set_updated_at();
 
--- =========================================================
 -- tiktok_mentions: link videos -> products (with confirmation flag)
--- =========================================================
 alter table public.tiktok_mentions
   add column if not exists video_id uuid references public.tiktok_videos(id) on delete cascade,
   add column if not exists confirmed boolean not null default false;
 create index if not exists tiktok_mentions_video_idx on public.tiktok_mentions(video_id);
 
--- =========================================================
 -- shade_twins: confirmation flag for human-reviewed pairs
--- =========================================================
 alter table public.shade_twins
   add column if not exists confirmed boolean not null default false;
 
--- =========================================================
 -- extracted_entities: raw NLP/Vision/Whisper hits before product linking
--- =========================================================
 create table if not exists public.extracted_entities (
   id uuid primary key default gen_random_uuid(),
   video_id uuid not null references public.tiktok_videos(id) on delete cascade,
@@ -69,9 +61,7 @@ create index if not exists extracted_entities_video_idx on public.extracted_enti
 create index if not exists extracted_entities_unreviewed_idx
   on public.extracted_entities(reviewed) where reviewed = false;
 
--- =========================================================
 -- RLS: admin tool writes via service_role (bypasses RLS); public can read
--- =========================================================
 alter table public.tiktok_videos      enable row level security;
 alter table public.extracted_entities enable row level security;
 
@@ -83,9 +73,7 @@ drop policy if exists "extracted_entities readable" on public.extracted_entities
 create policy "extracted_entities readable" on public.extracted_entities
   for select to anon, authenticated using (true);
 
--- =========================================================
 -- Realtime
--- =========================================================
 do $$
 begin
   if not exists (

@@ -1,7 +1,7 @@
 # env / secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
 # node
 node_modules/
@@ -32,5 +32,17 @@ glowmatch/.idea/
 *.swp
 tmp/
 
-# claude code workspace state
+# Local tooling
 .claude/
+.codex/
+.agents/
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.venv/
+coverage/
+*.pem
+*.key
+*.p12
+*.pfx

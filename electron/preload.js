@@ -1,15 +1,22 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-const RENDERER_CHANNELS = ['queue:enqueued', 'queue:log', 'queue:error', 'tiktok:apiHit'];
+const RENDERER_CHANNELS = [
+  'queue:enqueued',
+  'queue:log',
+  'queue:error',
+  'tiktok:apiHit',
+];
 
 contextBridge.exposeInMainWorld('admin', {
-  confirmEntity: args => ipcRenderer.invoke('admin:confirmEntity', args),
-  upsertProduct: args => ipcRenderer.invoke('admin:upsertProduct', args),
-  updateProduct: args => ipcRenderer.invoke('admin:updateProduct', args),
-  addShade: args => ipcRenderer.invoke('admin:addShade', args),
-  linkMention: args => ipcRenderer.invoke('admin:linkMention', args),
-  saveShadeTwin: args => ipcRenderer.invoke('admin:saveShadeTwin', args),
-  updateCreator: args => ipcRenderer.invoke('admin:updateCreator', args),
+  saveManualShadeReport: (args) =>
+    ipcRenderer.invoke('admin:saveManualShadeReport', args),
+  confirmEntity: (args) => ipcRenderer.invoke('admin:confirmEntity', args),
+  upsertProduct: (args) => ipcRenderer.invoke('admin:upsertProduct', args),
+  updateProduct: (args) => ipcRenderer.invoke('admin:updateProduct', args),
+  addShade: (args) => ipcRenderer.invoke('admin:addShade', args),
+  linkMention: (args) => ipcRenderer.invoke('admin:linkMention', args),
+  saveShadeTwin: (args) => ipcRenderer.invoke('admin:saveShadeTwin', args),
+  updateCreator: (args) => ipcRenderer.invoke('admin:updateCreator', args),
   captureCurrent: () => ipcRenderer.invoke('admin:captureCurrent'),
   openTikTokDevTools: () => ipcRenderer.invoke('admin:openTikTokDevTools'),
 

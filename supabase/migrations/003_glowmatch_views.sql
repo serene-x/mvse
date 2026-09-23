@@ -1,10 +1,11 @@
 -- GlowMatch consumer app: views + RPCs.
 -- Run after schema.sql and 002_admin_tool.sql.
 
--- =========================================================
 -- product_with_mention_count: discovery feed sort key
--- =========================================================
-create or replace view public.product_with_mention_count as
+-- drop first: 008 widens this view's column list, and CREATE OR REPLACE
+-- can't narrow it back when the runner re-applies migrations idempotently
+drop view if exists public.product_with_mention_count;
+create view public.product_with_mention_count as
 select
   p.id, p.name, p.brand, p.category, p.ingredient_list,
   p.sephora_url, p.ulta_url, p.created_at,
@@ -19,9 +20,7 @@ left join (
 
 grant select on public.product_with_mention_count to anon, authenticated;
 
--- =========================================================
 -- product_top_sentiments: top sentiment tags per product (flattened)
--- =========================================================
 create or replace view public.product_top_sentiments as
 select
   product_id,
@@ -35,11 +34,9 @@ group by product_id, tag;
 
 grant select on public.product_top_sentiments to anon, authenticated;
 
--- =========================================================
 -- match_user_to_creators: Jaccard-ish similarity over (brand|product|shade)
 -- tuples between user_owned_products and creators.shade_profile.
 -- Best-effort scoring; tune for your data.
--- =========================================================
 create or replace function public.match_user_to_creators(p_user_id uuid, p_limit int default 10)
 returns table (
   creator_id uuid,
@@ -94,11 +91,13 @@ $$;
 
 grant execute on function public.match_user_to_creators(uuid, int) to authenticated;
 
--- =========================================================
 -- recommended_products_for_user: products mentioned by the user's twin
 -- creators that the user does not currently own.
--- =========================================================
-create or replace function public.recommended_products_for_user(p_user_id uuid, p_limit int default 50)
+-- drop first: 015 widens this function's return type, and CREATE OR REPLACE
+-- can't change a return type when the runner re-applies migrations
+-- idempotently (015 re-creates the wide version right after).
+drop function if exists public.recommended_products_for_user(uuid, int);
+create function public.recommended_products_for_user(p_user_id uuid, p_limit int default 50)
 returns table (
   id uuid,
   name text,
@@ -136,11 +135,9 @@ $$;
 
 grant execute on function public.recommended_products_for_user(uuid, int) to authenticated;
 
--- =========================================================
 -- your_shade_for_product: recommend a shade for a given product based on
 -- shade twin matches. Returns the most-confidently-matched shade by
 -- summing twin similarity scores per shade name.
--- =========================================================
 create or replace function public.your_shade_for_product(p_user_id uuid, p_product_id uuid)
 returns table (shade_name text, hex_color text, score numeric) language sql stable as $$
   with twins as (

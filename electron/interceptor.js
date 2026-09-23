@@ -6,7 +6,9 @@
 const TIKTOK_API_FRAGMENTS = [
   '/api/post/item_list',
   '/api/recommend/item_list',
+  '/api/recommend/feed',
   '/api/item/detail',
+  '/api/item/info',
   '/api/comment/list',
 ];
 
@@ -14,38 +16,67 @@ const itemsByAweme = new Map();
 const commentsByAweme = new Map();
 
 function isTikTokApi(url) {
-  return TIKTOK_API_FRAGMENTS.some(f => url.includes(f));
+  return TIKTOK_API_FRAGMENTS.some((f) => url.includes(f));
 }
 
-function parseItem(it) {
-  if (!it) return null;
+function parseItem(raw) {
+  if (!raw) return null;
+  // /api/item/detail wraps the item under itemInfo.itemStruct. Other endpoints
+  // sometimes inline it. Accept both shapes.
+  const it =
+    raw.itemStruct ?? raw.itemInfo?.itemStruct ?? raw.aweme_detail ?? raw;
+
   const id = String(it.aweme_id ?? it.id ?? '');
   if (!id) return null;
-  const handle = it.author?.unique_id ?? it.author?.uniqueId ?? null;
+
+  const handle =
+    it.author?.unique_id ??
+    it.author?.uniqueId ??
+    it.authorInfo?.uniqueId ??
+    null;
+
+  // statsV2 fields are strings; stats are numbers; statistics is the legacy snake_case shape.
+  const viewCount =
+    it.statistics?.play_count ??
+    it.stats?.playCount ??
+    (it.statsV2?.playCount != null ? Number(it.statsV2.playCount) : null) ??
+    null;
+
+  const createTime = it.create_time ?? it.createTime;
+  const createTimeNum = createTime != null ? Number(createTime) : null;
+
   return {
     aweme_id: id,
     video_url: handle ? `https://www.tiktok.com/@${handle}/video/${id}` : null,
     creator_handle: handle,
     caption: it.desc ?? null,
-    view_count: it.statistics?.play_count ?? it.stats?.playCount ?? null,
-    posted_at: it.create_time ? new Date(it.create_time * 1000).toISOString() : null,
+    view_count: viewCount,
+    posted_at: createTimeNum
+      ? new Date(createTimeNum * 1000).toISOString()
+      : null,
   };
 }
 
 function parseComments(json) {
   const arr = json?.comments ?? json?.comment_list ?? [];
-  return arr.map(c => ({
-    text: c.text ?? c.share_info?.desc ?? '',
-    author: c.user?.unique_id ?? c.user?.uniqueId ?? null,
-    like_count: c.digg_count ?? c.diggCount ?? 0,
-  })).filter(c => c.text);
+  return arr
+    .map((c) => ({
+      text: c.text ?? c.share_info?.desc ?? '',
+      author: c.user?.unique_id ?? c.user?.uniqueId ?? null,
+      like_count: c.digg_count ?? c.diggCount ?? 0,
+    }))
+    .filter((c) => c.text);
 }
 
 function awemeIdFromCommentsUrl(url) {
   try {
     const u = new URL(url);
-    return u.searchParams.get('aweme_id') ?? u.searchParams.get('item_id') ?? null;
-  } catch { return null; }
+    return (
+      u.searchParams.get('aweme_id') ?? u.searchParams.get('item_id') ?? null
+    );
+  } catch {
+    return null;
+  }
 }
 
 function flush(awemeId, webContents) {
@@ -66,9 +97,12 @@ function flush(awemeId, webContents) {
 function attachInterceptors(webContents, emit) {
   webContents.session.webRequest.onCompleted(
     { urls: ['https://*.tiktok.com/*', 'https://*.tiktokv.com/*'] },
-    details => {
+    (details) => {
       if (!isTikTokApi(details.url)) return;
-      emit({ kind: 'apiHit', payload: { url: details.url, status: details.statusCode } });
+      emit({
+        kind: 'apiHit',
+        payload: { url: details.url, status: details.statusCode },
+      });
     },
   );
 
@@ -90,19 +124,30 @@ function attachInterceptors(webContents, emit) {
     let raw;
     try {
       const r = await webContents.debugger.sendCommand(
-        'Network.getResponseBody', { requestId },
+        'Network.getResponseBody',
+        { requestId },
       );
-      raw = r.base64Encoded ? Buffer.from(r.body, 'base64').toString('utf8') : r.body;
+      raw = r.base64Encoded
+        ? Buffer.from(r.body, 'base64').toString('utf8')
+        : r.body;
     } catch {
       return;
     }
 
     let json;
-    try { json = JSON.parse(raw); } catch { return; }
+    try {
+      json = JSON.parse(raw);
+    } catch {
+      return;
+    }
 
-    const items = json?.aweme_list
-      ?? json?.itemList
-      ?? (json?.aweme_detail ? [json.aweme_detail] : null);
+    const items =
+      json?.aweme_list ??
+      json?.itemList ??
+      json?.item_list ??
+      json?.items ??
+      (json?.aweme_detail ? [json.aweme_detail] : null) ??
+      (json?.itemInfo?.itemStruct ? [json.itemInfo.itemStruct] : null);
 
     if (Array.isArray(items)) {
       for (const it of items) {
@@ -120,7 +165,8 @@ function attachInterceptors(webContents, emit) {
       const existing = commentsByAweme.get(aid) ?? [];
       const merged = [...existing];
       for (const c of incoming) {
-        if (!merged.some(m => m.text === c.text && m.author === c.author)) merged.push(c);
+        if (!merged.some((m) => m.text === c.text && m.author === c.author))
+          merged.push(c);
       }
       merged.sort((a, b) => (b.like_count ?? 0) - (a.like_count ?? 0));
       commentsByAweme.set(aid, merged.slice(0, 50));

@@ -1,0 +1,1437 @@
+{
+  "the ordinary|niacinamide 10% + zinc 1%": [
+    {
+      "id": "b925aa3c-5d84-4ce0-b1d4-17d382adea4e",
+      "product_id": "e724babe-7515-4bad-9036-a08bbc3acb8c",
+      "ingredient_id": "ed4b06b9-4ac3-4f09-a817-5b0816d7cac2",
+      "role_in_product": "Supporting oil-control role — evidence for topical zinc here is modest.",
+      "form_note": null,
+      "concentration_pct": 1,
+      "concentration_source": "product_name",
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "ed4b06b9-4ac3-4f09-a817-5b0816d7cac2",
+        "sources": [],
+        "functions": [
+          "oil regulation",
+          "soothing"
+        ],
+        "inci_name": "Zinc PCA",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Zinc PCA",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Zinc salt aimed at oil control — modest evidence",
+        "active_family": null,
+        "evidence_level": "limited",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Plausible mechanism, thin direct evidence. It won't hurt; whether it visibly helps oiliness is uncertain.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A combination of zinc and a natural moisturizing molecule (PCA), usually added to help with oiliness and shine. There's some lab support for zinc calming oil production, but the topical human evidence is thin — treat \"controls sebum\" as a plausible maybe, not a promise.",
+        "science_explanation": "Zinc PCA pairs zinc's in-vitro 5-alpha-reductase inhibition (sebum pathway) and antimicrobial properties with the humectant PCA. Direct clinical trials of topical zinc PCA for sebum reduction are sparse; most support is extrapolated from in-vitro work or oral zinc studies.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "d37a71cb-d561-4c90-974f-70a6aaf9fa7b",
+      "product_id": "e724babe-7515-4bad-9036-a08bbc3acb8c",
+      "ingredient_id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+      "role_in_product": "The headline act: oil regulation, pores, and post-blemish marks.",
+      "form_note": null,
+      "concentration_pct": 10,
+      "concentration_source": "product_name",
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+        "sources": [
+          {
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8389214/",
+            "title": "Mechanistic Basis and Clinical Evidence for Nicotinamide in Skin Aging and Pigmentation",
+            "publisher": "Antioxidants (PMC)"
+          },
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/17147561/",
+            "title": "Nicotinic acid/niacinamide and the skin",
+            "publisher": "J Cosmet Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "barrier support",
+          "brightening",
+          "oil regulation",
+          "soothing"
+        ],
+        "inci_name": "Niacinamide",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Niacinamide can buffer retinoid irritation — a well-liked pairing.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Fine together in modern formulas — the old incompatibility claim is outdated (see claims).",
+            "with": "Ascorbic Acid"
+          },
+          {
+            "note": "Commonly combined for redness and tone.",
+            "with": "Azelaic Acid"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Niacinamide (Vitamin B3)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Calms, strengthens the skin barrier, and helps with oil and uneven tone",
+        "active_family": "vitamin_b3",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "One of the better-studied cosmetic ingredients, with multiple randomized controlled trials at 2–5% for barrier function and pigmentation. Claims tied to very high percentages (10%+) outrun the evidence — more is not clearly better.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin B3 that's one of the most reliable all-rounders in skincare. It helps your skin hold onto moisture, calms redness, and over time can soften dark spots and large-looking pores. It's gentle enough that almost everyone can use it.",
+        "science_explanation": "Niacinamide is a precursor to NAD+/NADP+, coenzymes involved in skin cell energy metabolism. Clinical studies support its role in increasing ceramide synthesis (barrier repair), reducing transepidermal water loss, and inhibiting melanosome transfer (pigmentation). Most studies use 2–5%; benefits above ~5% are less clearly established and very high concentrations can sting some people.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "the ordinary|hyaluronic acid 2% + b5": [
+    {
+      "id": "61c5d35e-a9b2-44bd-9a5a-94bd71fc3a06",
+      "product_id": "d33d08a8-18d2-4387-8d36-2d0323984941",
+      "ingredient_id": "95f0f32e-a7eb-46aa-b47c-26773c8aff9f",
+      "role_in_product": "Soothing, hydrating support.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "95f0f32e-a7eb-46aa-b47c-26773c8aff9f",
+        "sources": [],
+        "functions": [
+          "soothing",
+          "humectant",
+          "barrier support"
+        ],
+        "inci_name": "Panthenol",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Panthenol (Pro-Vitamin B5)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Soothing hydrator that helps irritated skin recover",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Well-supported for soothing and barrier recovery. Modest in effect — a helper, not a hero.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin B5 that hydrates and genuinely calms. It's a favorite supporting ingredient for irritated, freshly-exfoliated, or just-cranky skin — think of it as a glass of water and a blanket for your skin barrier.",
+        "science_explanation": "Panthenol converts to pantothenic acid in skin, acts as a humectant, and has documented effects on barrier repair and reduction of irritation and redness in clinical studies. Often used post-procedure in dermatology.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "dea99a3f-e415-4b20-8a6b-a28fbd39480b",
+      "product_id": "d33d08a8-18d2-4387-8d36-2d0323984941",
+      "ingredient_id": "14e000ff-9422-4585-8593-5a11f785dc75",
+      "role_in_product": "The hydrator: binds water at multiple skin depths.",
+      "form_note": "Blend of molecular weights (as sodium hyaluronate).",
+      "concentration_pct": 2,
+      "concentration_source": "product_name",
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "14e000ff-9422-4585-8593-5a11f785dc75",
+        "sources": [],
+        "functions": [
+          "humectant",
+          "hydration"
+        ],
+        "inci_name": "Sodium Hyaluronate",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Hydration support during retinoid adjustment.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Humectants stack well.",
+            "with": "Glycerin"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Hyaluronic acid",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Water-binding hydrator that temporarily plumps the skin's surface",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Extremely well-established as a surface hydrator. The marketing often overshoots: the plumping is real but temporary, and \"1000x its weight in water\" varies by molecular weight.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 0,
+        "simple_explanation": "A molecule your body already makes that can hold many times its weight in water — like a sponge for your skin's surface. It gives an immediate hydrated, plumper look. What it doesn't do: permanently change your skin or \"fill\" wrinkles from a jar. The effect lasts as long as the hydration does.",
+        "science_explanation": "Hyaluronic acid is a glycosaminoglycan humectant. Topically, most of it (especially high-molecular-weight forms) stays in the stratum corneum, binding water and improving surface hydration and the appearance of fine lines. Lower-molecular-weight fractions penetrate somewhat better; claims of deep dermal effects from topical application are weakly supported. In very dry air it can theoretically draw water from skin — pairing with an occlusive moisturizer helps.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "the ordinary|glycolic acid 7% exfoliating toner": [
+    {
+      "id": "5c2c5178-b938-48f8-bbd4-c6d1f4d018b6",
+      "product_id": "f3ef6fe7-72e0-4b64-9840-70abb64d9939",
+      "ingredient_id": "d73f4ec5-2eb1-4f33-9db1-d6cb38bc01b4",
+      "role_in_product": "The exfoliant: dissolves the bonds holding dead surface cells.",
+      "form_note": "Effective strength depends on the formula's pH, which isn't disclosed — the 7% alone doesn't tell the whole story.",
+      "concentration_pct": 7,
+      "concentration_source": "product_name",
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "d73f4ec5-2eb1-4f33-9db1-d6cb38bc01b4",
+        "sources": [],
+        "functions": [
+          "exfoliant",
+          "cell turnover",
+          "brightening",
+          "texture"
+        ],
+        "inci_name": "Glycolic Acid",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Hydration alongside exfoliation.",
+            "with": "Hyaluronic Acid"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Glycolic acid (AHA)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [
+          {
+            "note": "Same-night stacking raises irritation risk — alternate nights.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Layering multiple exfoliants invites over-exfoliation — pick one per routine.",
+            "with": "Salicylic Acid"
+          }
+        ],
+        "what_it_does": "Chemical exfoliant that smooths texture and brightens by dissolving the glue between dead skin cells",
+        "active_family": "aha",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "AHAs are among the best-studied exfoliants. The honest caveat: the labeled percentage doesn't tell you the effective strength without knowing the formula's pH, which brands rarely publish.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "An alpha-hydroxy acid (AHA) that loosens the bonds holding dead cells on your skin's surface, so they shed instead of building up. Skin looks smoother and brighter. The smallest AHA molecule, so it penetrates deepest — which also makes it the most likely AHA to sting or irritate.",
+        "science_explanation": "Glycolic acid disrupts corneodesmosome adhesion in the stratum corneum, accelerating desquamation. Effects are strongly pH- and concentration-dependent — free-acid concentration at the formula's pH, not the labeled percentage, determines strength. Studies also suggest dermal effects (collagen stimulation) with sustained use. Increases photosensitivity: sunscreen is non-negotiable.",
+        "is_cell_turnover_active": true
+      }
+    }
+  ],
+  "the ordinary|azelaic acid suspension 10%": [
+    {
+      "id": "0728acea-e460-4807-98ca-10c90c7989b9",
+      "product_id": "c2b3951d-8280-4dc8-a30e-a3897ec84027",
+      "ingredient_id": "9ef9de4a-7da3-477b-a74f-91ce7b62aaa0",
+      "role_in_product": "The everything-helper: redness, breakouts, and dark marks.",
+      "form_note": "Prescription azelaic acid is 15–20%; direct evidence at 10% is thinner.",
+      "concentration_pct": 10,
+      "concentration_source": "product_name",
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "9ef9de4a-7da3-477b-a74f-91ce7b62aaa0",
+        "sources": [],
+        "functions": [
+          "acne",
+          "rosacea",
+          "brightening",
+          "anti-inflammatory",
+          "cell turnover"
+        ],
+        "inci_name": "Azelaic Acid",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "A commonly recommended pair — azelaic can calm the redness while both target texture and post-blemish marks.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Complementary for redness and tone.",
+            "with": "Niacinamide"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Azelaic acid",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Multi-tasker for redness, breakouts, and dark marks — unusually gentle for how much it does",
+        "active_family": "azelaic",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Prescription-strength azelaic acid (15–20%) has strong evidence for acne and rosacea. Over-the-counter 10% versions rely mostly on extrapolation — probably helpful, but the direct evidence is thinner. Effects also depend on the formulation's delivery.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A gentle multi-tasker made by yeast that lives on everyone's skin. It calms redness, fights breakout-causing bacteria, helps keep pores clear, and fades the dark marks breakouts leave behind — all while being one of the least irritating actives. Chronically underrated.",
+        "science_explanation": "Azelaic acid is a dicarboxylic acid with antimicrobial activity against C. acnes, normalizes keratinization (mildly comedolytic), inhibits tyrosinase (post-inflammatory pigmentation), and has anti-inflammatory effects via reduced reactive oxygen species. Prescription strengths are 15–20%; over-the-counter products are typically 10% and have less direct trial evidence (see the claims on specific products).",
+        "is_cell_turnover_active": true
+      }
+    }
+  ],
+  "paula's choice|skin perfecting 2% bha liquid exfoliant": [
+    {
+      "id": "e89abe1c-1ead-4704-97ad-46b8555d93c4",
+      "product_id": "9f8a8d1b-e81a-4e48-bf54-c056649af408",
+      "ingredient_id": "3fa98213-9a67-4844-8a0e-46412423a972",
+      "role_in_product": "The pore-clearer: oil-soluble exfoliation inside the pore.",
+      "form_note": null,
+      "concentration_pct": 2,
+      "concentration_source": "product_name",
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "3fa98213-9a67-4844-8a0e-46412423a972",
+        "sources": [],
+        "functions": [
+          "exfoliant",
+          "cell turnover",
+          "acne",
+          "pore care"
+        ],
+        "inci_name": "Salicylic Acid",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Calming support alongside exfoliation.",
+            "with": "Niacinamide"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Salicylic acid (BHA)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [
+          {
+            "note": "Layering multiple exfoliants invites over-exfoliation.",
+            "with": "Glycolic Acid"
+          },
+          {
+            "note": "Same-night stacking raises irritation risk for many people.",
+            "with": "Retinol"
+          }
+        ],
+        "what_it_does": "Oil-soluble exfoliant that gets inside pores — the go-to for blackheads and congestion",
+        "active_family": "bha",
+        "evidence_level": "well_established",
+        "pregnancy_note": "Low-strength rinse-off and spot use is generally considered lower-risk, but high-dose or extensive salicylic acid is commonly avoided during pregnancy — check with your doctor.",
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Decades of use and solid trial evidence at 0.5–2% for acne and congestion. Honest caveat: it treats and prevents clogs; it won't do much for deep cystic acne on its own.",
+        "is_essential_oil": false,
+        "pregnancy_caution": true,
+        "comedogenic_rating": null,
+        "simple_explanation": "A beta-hydroxy acid (BHA) and the only common exfoliant that's oil-soluble — meaning it can travel into oily pores and clear them from the inside, not just polish the surface. That's why it's the classic pick for blackheads, congestion, and breakout-prone skin. It's also mildly anti-inflammatory.",
+        "science_explanation": "Salicylic acid is lipophilic, allowing penetration into the pilosebaceous unit where it exfoliates the follicle lining (comedolytic). It's also anti-inflammatory (related to aspirin). Most OTC evidence is at 0.5–2%. Unlike AHAs it does not significantly increase photosensitivity, though sunscreen remains wise.",
+        "is_cell_turnover_active": true
+      }
+    }
+  ],
+  "cerave|foaming facial cleanser": [
+    {
+      "id": "0090acd7-41f2-4460-b0ff-57be561dc203",
+      "product_id": "70ef93b0-6bdb-4c32-947f-fc4ad5918917",
+      "ingredient_id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+      "role_in_product": "Soothing support — again, brief contact time in a cleanser.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+        "sources": [
+          {
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8389214/",
+            "title": "Mechanistic Basis and Clinical Evidence for Nicotinamide in Skin Aging and Pigmentation",
+            "publisher": "Antioxidants (PMC)"
+          },
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/17147561/",
+            "title": "Nicotinic acid/niacinamide and the skin",
+            "publisher": "J Cosmet Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "barrier support",
+          "brightening",
+          "oil regulation",
+          "soothing"
+        ],
+        "inci_name": "Niacinamide",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Niacinamide can buffer retinoid irritation — a well-liked pairing.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Fine together in modern formulas — the old incompatibility claim is outdated (see claims).",
+            "with": "Ascorbic Acid"
+          },
+          {
+            "note": "Commonly combined for redness and tone.",
+            "with": "Azelaic Acid"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Niacinamide (Vitamin B3)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Calms, strengthens the skin barrier, and helps with oil and uneven tone",
+        "active_family": "vitamin_b3",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "One of the better-studied cosmetic ingredients, with multiple randomized controlled trials at 2–5% for barrier function and pigmentation. Claims tied to very high percentages (10%+) outrun the evidence — more is not clearly better.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin B3 that's one of the most reliable all-rounders in skincare. It helps your skin hold onto moisture, calms redness, and over time can soften dark spots and large-looking pores. It's gentle enough that almost everyone can use it.",
+        "science_explanation": "Niacinamide is a precursor to NAD+/NADP+, coenzymes involved in skin cell energy metabolism. Clinical studies support its role in increasing ceramide synthesis (barrier repair), reducing transepidermal water loss, and inhibiting melanosome transfer (pigmentation). Most studies use 2–5%; benefits above ~5% are less clearly established and very high concentrations can sting some people.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "c762fa6b-2987-471a-b6d9-03e0b2d204bb",
+      "product_id": "70ef93b0-6bdb-4c32-947f-fc4ad5918917",
+      "ingredient_id": "6383fca6-253b-4dde-b02a-6e4c0bf023e1",
+      "role_in_product": "Barrier-support gesture — limited contact time in a rinse-off product.",
+      "form_note": "One of three ceramides in CeraVe's blend.",
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "6383fca6-253b-4dde-b02a-6e4c0bf023e1",
+        "sources": [],
+        "functions": [
+          "barrier support",
+          "moisturizing"
+        ],
+        "inci_name": "Ceramide NP",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Ceramides",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Skin-identical lipids that patch the mortar of your skin barrier",
+        "active_family": "lipid",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Good evidence that ceramide-containing moisturizers help barrier function. Which specific ceramide blend is \"best\" is less settled.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "If your skin barrier is a brick wall, ceramides are the mortar between the bricks. Your skin makes them naturally, but dryness, over-exfoliation, and age deplete them. Adding them back in a moisturizer helps the wall hold water in and keep irritants out. Great for dry or sensitive skin.",
+        "science_explanation": "Ceramides are the dominant lipid class of the stratum corneum's intercellular matrix. Topical ceramide-containing moisturizers (usually combined with cholesterol and fatty acids) improve barrier function and reduce transepidermal water loss in studies, including in eczema-prone skin. The specific ratio matters more than any single ceramide.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "cerave|moisturizing cream": [
+    {
+      "id": "30ce7302-ea94-4f6f-8452-7682cbd34f0a",
+      "product_id": "7719f83b-41d4-41b8-adf8-38d0490739e5",
+      "ingredient_id": "7be325b1-d2d3-420e-bebd-80f2c9fac0e6",
+      "role_in_product": "The dependable workhorse humectant.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 2,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "7be325b1-d2d3-420e-bebd-80f2c9fac0e6",
+        "sources": [],
+        "functions": [
+          "humectant",
+          "hydration",
+          "barrier support"
+        ],
+        "inci_name": "Glycerin",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Glycerin",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "The unglamorous workhorse of hydration",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "About as solid as cosmetic evidence gets. No real controversy.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 0,
+        "simple_explanation": "The least trendy, most dependable hydrator in skincare — it's in almost everything for a reason. It pulls water into the top layer of your skin and helps it stay there. If a moisturizer works, glycerin is often quietly doing a lot of the heavy lifting.",
+        "science_explanation": "Glycerin (glycerol) is a small-molecule humectant that mimics the skin's natural moisturizing factor, improves stratum corneum hydration, and supports barrier recovery. It's one of the most consistently supported moisturizing ingredients in the literature, often outperforming trendier humectants in head-to-head measurements.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "8a2246e8-e5ac-4d92-b294-97408ee32aaf",
+      "product_id": "7719f83b-41d4-41b8-adf8-38d0490739e5",
+      "ingredient_id": "14e000ff-9422-4585-8593-5a11f785dc75",
+      "role_in_product": "Humectant hydration alongside the barrier lipids.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "14e000ff-9422-4585-8593-5a11f785dc75",
+        "sources": [],
+        "functions": [
+          "humectant",
+          "hydration"
+        ],
+        "inci_name": "Sodium Hyaluronate",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Hydration support during retinoid adjustment.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Humectants stack well.",
+            "with": "Glycerin"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Hyaluronic acid",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Water-binding hydrator that temporarily plumps the skin's surface",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Extremely well-established as a surface hydrator. The marketing often overshoots: the plumping is real but temporary, and \"1000x its weight in water\" varies by molecular weight.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 0,
+        "simple_explanation": "A molecule your body already makes that can hold many times its weight in water — like a sponge for your skin's surface. It gives an immediate hydrated, plumper look. What it doesn't do: permanently change your skin or \"fill\" wrinkles from a jar. The effect lasts as long as the hydration does.",
+        "science_explanation": "Hyaluronic acid is a glycosaminoglycan humectant. Topically, most of it (especially high-molecular-weight forms) stays in the stratum corneum, binding water and improving surface hydration and the appearance of fine lines. Lower-molecular-weight fractions penetrate somewhat better; claims of deep dermal effects from topical application are weakly supported. In very dry air it can theoretically draw water from skin — pairing with an occlusive moisturizer helps.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "c9f85ada-4b5a-4002-ab53-89c9a525a5c5",
+      "product_id": "7719f83b-41d4-41b8-adf8-38d0490739e5",
+      "ingredient_id": "6383fca6-253b-4dde-b02a-6e4c0bf023e1",
+      "role_in_product": "The core of the formula: replenishes barrier lipids.",
+      "form_note": "One of three ceramides in CeraVe's blend.",
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "6383fca6-253b-4dde-b02a-6e4c0bf023e1",
+        "sources": [],
+        "functions": [
+          "barrier support",
+          "moisturizing"
+        ],
+        "inci_name": "Ceramide NP",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Ceramides",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Skin-identical lipids that patch the mortar of your skin barrier",
+        "active_family": "lipid",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Good evidence that ceramide-containing moisturizers help barrier function. Which specific ceramide blend is \"best\" is less settled.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "If your skin barrier is a brick wall, ceramides are the mortar between the bricks. Your skin makes them naturally, but dryness, over-exfoliation, and age deplete them. Adding them back in a moisturizer helps the wall hold water in and keep irritants out. Great for dry or sensitive skin.",
+        "science_explanation": "Ceramides are the dominant lipid class of the stratum corneum's intercellular matrix. Topical ceramide-containing moisturizers (usually combined with cholesterol and fatty acids) improve barrier function and reduce transepidermal water loss in studies, including in eczema-prone skin. The specific ratio matters more than any single ceramide.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "cerave|resurfacing retinol serum": [
+    {
+      "id": "7086ab80-bb26-4c98-a969-d884f54a8304",
+      "product_id": "5b13c2b8-7615-4832-b655-61e0e83bfeec",
+      "ingredient_id": "6383fca6-253b-4dde-b02a-6e4c0bf023e1",
+      "role_in_product": "Barrier support during retinol adjustment.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 2,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "6383fca6-253b-4dde-b02a-6e4c0bf023e1",
+        "sources": [],
+        "functions": [
+          "barrier support",
+          "moisturizing"
+        ],
+        "inci_name": "Ceramide NP",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Ceramides",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Skin-identical lipids that patch the mortar of your skin barrier",
+        "active_family": "lipid",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Good evidence that ceramide-containing moisturizers help barrier function. Which specific ceramide blend is \"best\" is less settled.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "If your skin barrier is a brick wall, ceramides are the mortar between the bricks. Your skin makes them naturally, but dryness, over-exfoliation, and age deplete them. Adding them back in a moisturizer helps the wall hold water in and keep irritants out. Great for dry or sensitive skin.",
+        "science_explanation": "Ceramides are the dominant lipid class of the stratum corneum's intercellular matrix. Topical ceramide-containing moisturizers (usually combined with cholesterol and fatty acids) improve barrier function and reduce transepidermal water loss in studies, including in eczema-prone skin. The specific ratio matters more than any single ceramide.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "2e41a59f-fe81-4f4f-9713-610ec48fd402",
+      "product_id": "5b13c2b8-7615-4832-b655-61e0e83bfeec",
+      "ingredient_id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+      "role_in_product": "Irritation-buffering support.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+        "sources": [
+          {
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8389214/",
+            "title": "Mechanistic Basis and Clinical Evidence for Nicotinamide in Skin Aging and Pigmentation",
+            "publisher": "Antioxidants (PMC)"
+          },
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/17147561/",
+            "title": "Nicotinic acid/niacinamide and the skin",
+            "publisher": "J Cosmet Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "barrier support",
+          "brightening",
+          "oil regulation",
+          "soothing"
+        ],
+        "inci_name": "Niacinamide",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Niacinamide can buffer retinoid irritation — a well-liked pairing.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Fine together in modern formulas — the old incompatibility claim is outdated (see claims).",
+            "with": "Ascorbic Acid"
+          },
+          {
+            "note": "Commonly combined for redness and tone.",
+            "with": "Azelaic Acid"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Niacinamide (Vitamin B3)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Calms, strengthens the skin barrier, and helps with oil and uneven tone",
+        "active_family": "vitamin_b3",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "One of the better-studied cosmetic ingredients, with multiple randomized controlled trials at 2–5% for barrier function and pigmentation. Claims tied to very high percentages (10%+) outrun the evidence — more is not clearly better.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin B3 that's one of the most reliable all-rounders in skincare. It helps your skin hold onto moisture, calms redness, and over time can soften dark spots and large-looking pores. It's gentle enough that almost everyone can use it.",
+        "science_explanation": "Niacinamide is a precursor to NAD+/NADP+, coenzymes involved in skin cell energy metabolism. Clinical studies support its role in increasing ceramide synthesis (barrier repair), reducing transepidermal water loss, and inhibiting melanosome transfer (pigmentation). Most studies use 2–5%; benefits above ~5% are less clearly established and very high concentrations can sting some people.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "3eab41c8-ddb5-4e85-a025-c84d8626af38",
+      "product_id": "5b13c2b8-7615-4832-b655-61e0e83bfeec",
+      "ingredient_id": "4c3827a8-ce32-4ac4-8c50-02d8c73d2eb4",
+      "role_in_product": "The active: texture and post-blemish marks over months.",
+      "form_note": "Encapsulated retinol; percentage not disclosed by the brand, so strength is honestly unknowable from the label.",
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "4c3827a8-ce32-4ac4-8c50-02d8c73d2eb4",
+        "sources": [
+          {
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9112391/",
+            "title": "Topical tretinoin for treating photoaging: a systematic review of randomized controlled trials",
+            "publisher": "J Cosmet Dermatol (PMC)"
+          }
+        ],
+        "functions": [
+          "cell turnover",
+          "anti-aging",
+          "acne",
+          "texture"
+        ],
+        "inci_name": "Retinol",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Helps buffer irritation.",
+            "with": "Niacinamide"
+          },
+          {
+            "note": "Hydration support during the adjustment period.",
+            "with": "Hyaluronic Acid"
+          },
+          {
+            "note": "Often recommended together — azelaic can help with the redness while both work on texture and marks.",
+            "with": "Azelaic Acid"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Retinol (Vitamin A)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [
+          {
+            "note": "BP can deactivate retinol — use in separate routines (e.g. BP in the morning, retinol at night).",
+            "with": "Benzoyl Peroxide"
+          },
+          {
+            "note": "Generally better in separate routines (vitamin C in the morning, retinol at night) — different pH preferences and stacked irritation.",
+            "with": "Ascorbic Acid"
+          },
+          {
+            "note": "Stacking strong exfoliation with a retinoid the same night raises irritation risk — alternate nights instead.",
+            "with": "Glycolic Acid"
+          }
+        ],
+        "what_it_does": "Speeds up skin renewal — the best-evidenced over-the-counter anti-aging and acne-prevention active",
+        "active_family": "retinoid",
+        "evidence_level": "well_established",
+        "pregnancy_note": "Retinoids are commonly avoided during pregnancy and breastfeeding — check with your doctor.",
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Decades of research on the retinoid pathway, including randomized trials of retinol itself for photoaging. The main honest caveats: over-the-counter strengths vary widely, brands often hide the concentration, and stability/packaging matter a lot.",
+        "is_essential_oil": false,
+        "pregnancy_caution": true,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin A that tells your skin to renew itself faster. It's the most proven over-the-counter ingredient for smoothing fine lines and keeping pores clear — but it asks for patience: expect an adjustment period of dryness or flaking, and results on a scale of months, not days.",
+        "science_explanation": "Retinol is converted in skin to retinaldehyde and then retinoic acid, which binds nuclear retinoic-acid receptors and alters gene expression: increased epidermal turnover, increased collagen synthesis, decreased collagen breakdown. It's less potent than prescription tretinoin (conversion is inefficient) but the same pathway. Efficacy is concentration- and formulation-dependent, and many products don't disclose their percentage.",
+        "is_cell_turnover_active": true
+      }
+    }
+  ],
+  "skinceuticals|c e ferulic": [
+    {
+      "id": "6f8a9a42-56e7-4003-a47e-3c8756c9dd30",
+      "product_id": "1e66de49-63c3-4722-a4ff-a55fca702b4f",
+      "ingredient_id": "05cd8343-e225-4776-a023-0cf4f2eb3433",
+      "role_in_product": "Stabilizes the formula and roughly doubles its measured photoprotection.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 2,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "05cd8343-e225-4776-a023-0cf4f2eb3433",
+        "sources": [
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/16185284/",
+            "title": "Ferulic acid stabilizes a solution of vitamins C and E and doubles its photoprotection of skin (Lin et al., 2005)",
+            "publisher": "J Invest Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "antioxidant",
+          "stabilizer"
+        ],
+        "inci_name": "Ferulic Acid",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Stabilizes it and increases the combined antioxidant effect.",
+            "with": "Ascorbic Acid"
+          },
+          {
+            "note": "Part of the well-studied C+E+ferulic trio.",
+            "with": "Tocopherol"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Ferulic acid",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Plant antioxidant that famously makes vitamin C formulas stronger and more stable",
+        "active_family": "antioxidant",
+        "evidence_level": "promising",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Good supporting evidence in combination formulas; less studied as a solo active.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A plant-derived antioxidant that's rarely the star but often the best supporting actor: added to vitamin C serums, it stabilizes the formula and boosts the overall antioxidant effect. The famous C + E + ferulic trio exists because these three genuinely reinforce each other.",
+        "science_explanation": "Ferulic acid is a phenolic antioxidant. Research (notably on the 15% L-ascorbic acid + 1% alpha-tocopherol + 0.5% ferulic acid combination) found it stabilizes both vitamins and roughly doubles the measured photoprotection of the combination versus vitamin C alone.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "785e6fa5-1ae1-41a7-bcd7-2c011cb3c253",
+      "product_id": "1e66de49-63c3-4722-a4ff-a55fca702b4f",
+      "ingredient_id": "849a8972-cea2-4232-990f-77e08f2280f0",
+      "role_in_product": "Recharges the vitamin C and protects skin lipids.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "849a8972-cea2-4232-990f-77e08f2280f0",
+        "sources": [
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/16185284/",
+            "title": "Ferulic acid stabilizes a solution of vitamins C and E and doubles its photoprotection of skin (Lin et al., 2005)",
+            "publisher": "J Invest Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "antioxidant",
+          "moisturizing"
+        ],
+        "inci_name": "Tocopherol",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "They regenerate each other — a true synergy.",
+            "with": "Ascorbic Acid"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Vitamin E",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Oil-soluble antioxidant and skin conditioner",
+        "active_family": "antioxidant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": "Old comedogenicity scales rate tocopherol around 2/5, but those rabbit-ear assays are contested and formula context matters more. Your own experience wins.",
+        "evidence_summary": "Solid as an antioxidant and moisturizer, especially in combinations. The scar-healing reputation is not well supported.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 2,
+        "simple_explanation": "An oil-soluble antioxidant your skin naturally stocks in its outer layers. In products it defends oils (and your skin) from oxidation and adds a moisturizing touch. It works best in a team — especially with vitamin C, which recharges it after it neutralizes a free radical.",
+        "science_explanation": "Alpha-tocopherol is the predominant antioxidant of the stratum corneum, protecting lipids from peroxidation. Topically it's photoprotective in combination with vitamin C (they regenerate each other). Evidence for vitamin E alone reducing scars is weak, despite the folk reputation.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "3b96260d-40e8-4015-87c0-c2e6f58fc2fe",
+      "product_id": "1e66de49-63c3-4722-a4ff-a55fca702b4f",
+      "ingredient_id": "7fcf393e-dee1-4187-9f3e-947b619200fb",
+      "role_in_product": "The star: pure vitamin C for antioxidant defense and brightening.",
+      "form_note": "Pure L-ascorbic acid — the best-studied but least stable form.",
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "7fcf393e-dee1-4187-9f3e-947b619200fb",
+        "sources": [
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/16185284/",
+            "title": "Ferulic acid stabilizes a solution of vitamins C and E and doubles its photoprotection of skin (Lin et al., 2005)",
+            "publisher": "J Invest Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "antioxidant",
+          "brightening",
+          "collagen support"
+        ],
+        "inci_name": "Ascorbic Acid",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Stabilizes vitamin C and adds antioxidant effect — a well-studied trio with vitamin E.",
+            "with": "Ferulic Acid"
+          },
+          {
+            "note": "Vitamin E regenerates oxidized vitamin C — they reinforce each other.",
+            "with": "Tocopherol"
+          },
+          {
+            "note": "Antioxidants + sunscreen in the morning is a well-supported combination.",
+            "with": "Zinc Oxide"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Vitamin C (L-ascorbic acid)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [
+          {
+            "note": "BP oxidizes vitamin C — separate routines.",
+            "with": "Benzoyl Peroxide"
+          },
+          {
+            "note": "Generally separate (C in the morning, retinol at night) — different pH preferences and stacked irritation.",
+            "with": "Retinol"
+          }
+        ],
+        "what_it_does": "Antioxidant that brightens and supports collagen — the pure, best-studied form of vitamin C",
+        "active_family": "vitamin_c",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Strong evidence for photoprotection alongside sunscreen and for brightening, mostly at 10–20% in low-pH formulas. Whether a given product delivers depends heavily on its form, concentration, pH, and packaging — many products don't disclose enough to judge.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "The pure form of vitamin C. It helps defend skin from everyday environmental stress, gradually brightens dark spots, and supports your skin's own collagen production. The catch: it's famously unstable — it degrades with light and air, which is why formulation and packaging matter as much as the ingredient itself.",
+        "science_explanation": "L-ascorbic acid is a potent antioxidant and a required cofactor for collagen cross-linking enzymes (prolyl and lysyl hydroxylase). It also inhibits tyrosinase, reducing melanin production. Penetration requires a low pH (~3.5 or below) and efficacy is concentration-dependent, with most evidence in the 10–20% range. Oxidized (browned) vitamin C is less effective.",
+        "is_cell_turnover_active": true
+      }
+    }
+  ],
+  "neutrogena|hydro boost water gel": [
+    {
+      "id": "5fd455f2-b992-4ceb-a913-1a5003e03db9",
+      "product_id": "33e337bd-be31-475e-97c6-725d3b427b32",
+      "ingredient_id": "14e000ff-9422-4585-8593-5a11f785dc75",
+      "role_in_product": "The headline humectant this product is built around.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "14e000ff-9422-4585-8593-5a11f785dc75",
+        "sources": [],
+        "functions": [
+          "humectant",
+          "hydration"
+        ],
+        "inci_name": "Sodium Hyaluronate",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Hydration support during retinoid adjustment.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Humectants stack well.",
+            "with": "Glycerin"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Hyaluronic acid",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Water-binding hydrator that temporarily plumps the skin's surface",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Extremely well-established as a surface hydrator. The marketing often overshoots: the plumping is real but temporary, and \"1000x its weight in water\" varies by molecular weight.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 0,
+        "simple_explanation": "A molecule your body already makes that can hold many times its weight in water — like a sponge for your skin's surface. It gives an immediate hydrated, plumper look. What it doesn't do: permanently change your skin or \"fill\" wrinkles from a jar. The effect lasts as long as the hydration does.",
+        "science_explanation": "Hyaluronic acid is a glycosaminoglycan humectant. Topically, most of it (especially high-molecular-weight forms) stays in the stratum corneum, binding water and improving surface hydration and the appearance of fine lines. Lower-molecular-weight fractions penetrate somewhat better; claims of deep dermal effects from topical application are weakly supported. In very dry air it can theoretically draw water from skin — pairing with an occlusive moisturizer helps.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "la roche-posay|cicaplast baume b5+": [
+    {
+      "id": "698df691-13a0-4621-b8da-60fe41d4a4e8",
+      "product_id": "4a023354-f814-4613-bd54-42af0c1aff8f",
+      "ingredient_id": "95f0f32e-a7eb-46aa-b47c-26773c8aff9f",
+      "role_in_product": "The B5 of the name: the soothing, barrier-recovery centerpiece.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "95f0f32e-a7eb-46aa-b47c-26773c8aff9f",
+        "sources": [],
+        "functions": [
+          "soothing",
+          "humectant",
+          "barrier support"
+        ],
+        "inci_name": "Panthenol",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Panthenol (Pro-Vitamin B5)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Soothing hydrator that helps irritated skin recover",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Well-supported for soothing and barrier recovery. Modest in effect — a helper, not a hero.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin B5 that hydrates and genuinely calms. It's a favorite supporting ingredient for irritated, freshly-exfoliated, or just-cranky skin — think of it as a glass of water and a blanket for your skin barrier.",
+        "science_explanation": "Panthenol converts to pantothenic acid in skin, acts as a humectant, and has documented effects on barrier repair and reduction of irritation and redness in clinical studies. Often used post-procedure in dermatology.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "eltamd|uv clear broad-spectrum spf 46": [
+    {
+      "id": "b4d0f0a8-27e8-4762-b888-5f56f41b4ca0",
+      "product_id": "3a298105-4ce4-4fd2-8167-710bcd3478c8",
+      "ingredient_id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+      "role_in_product": "The skincare add-in UV Clear is known for.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+        "sources": [
+          {
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8389214/",
+            "title": "Mechanistic Basis and Clinical Evidence for Nicotinamide in Skin Aging and Pigmentation",
+            "publisher": "Antioxidants (PMC)"
+          },
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/17147561/",
+            "title": "Nicotinic acid/niacinamide and the skin",
+            "publisher": "J Cosmet Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "barrier support",
+          "brightening",
+          "oil regulation",
+          "soothing"
+        ],
+        "inci_name": "Niacinamide",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Niacinamide can buffer retinoid irritation — a well-liked pairing.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Fine together in modern formulas — the old incompatibility claim is outdated (see claims).",
+            "with": "Ascorbic Acid"
+          },
+          {
+            "note": "Commonly combined for redness and tone.",
+            "with": "Azelaic Acid"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Niacinamide (Vitamin B3)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Calms, strengthens the skin barrier, and helps with oil and uneven tone",
+        "active_family": "vitamin_b3",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "One of the better-studied cosmetic ingredients, with multiple randomized controlled trials at 2–5% for barrier function and pigmentation. Claims tied to very high percentages (10%+) outrun the evidence — more is not clearly better.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin B3 that's one of the most reliable all-rounders in skincare. It helps your skin hold onto moisture, calms redness, and over time can soften dark spots and large-looking pores. It's gentle enough that almost everyone can use it.",
+        "science_explanation": "Niacinamide is a precursor to NAD+/NADP+, coenzymes involved in skin cell energy metabolism. Clinical studies support its role in increasing ceramide synthesis (barrier repair), reducing transepidermal water loss, and inhibiting melanosome transfer (pigmentation). Most studies use 2–5%; benefits above ~5% are less clearly established and very high concentrations can sting some people.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "894f4ac5-1146-4556-a57f-14027caa5ced",
+      "product_id": "3a298105-4ce4-4fd2-8167-710bcd3478c8",
+      "ingredient_id": "135ee138-4d8c-4ce3-b935-586adb6080aa",
+      "role_in_product": "Mineral UV filter (exact percentage lives on the drug-facts label).",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "135ee138-4d8c-4ce3-b935-586adb6080aa",
+        "sources": [],
+        "functions": [
+          "uv filter",
+          "soothing"
+        ],
+        "inci_name": "Zinc Oxide",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Morning antioxidant + sunscreen is a well-supported combination.",
+            "with": "Ascorbic Acid"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Zinc oxide (mineral UV filter)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Broad-spectrum mineral sunscreen filter",
+        "active_family": "uv_filter",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "One of the best-validated UV filters. White cast on medium-deep and deep skin tones is a real, common frustration worth checking reviews for.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A mineral that sits on your skin and absorbs UV light across both UVA and UVB — one of the most complete single sun filters we have, and gentle enough that it's the classic pick for sensitive skin and babies. Its one honest drawback: it can leave a white cast, especially on deeper skin tones.",
+        "science_explanation": "Zinc oxide attenuates UV primarily by absorption (not, as commonly repeated, mostly reflection), covering UVB through UVA1. It's photostable and has a strong safety record. Particle size determines the trade-off between white cast and transparency; \"sheer\" formulas use smaller or coated particles.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "the ordinary|alpha arbutin 2% + ha": [
+    {
+      "id": "553e398e-0784-4cb6-9175-d2c8293b993e",
+      "product_id": "41e38ee3-abd5-4746-9d04-76084b7750a5",
+      "ingredient_id": "14e000ff-9422-4585-8593-5a11f785dc75",
+      "role_in_product": "The HA in the name — hydration support alongside the arbutin.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "14e000ff-9422-4585-8593-5a11f785dc75",
+        "sources": [],
+        "functions": [
+          "humectant",
+          "hydration"
+        ],
+        "inci_name": "Sodium Hyaluronate",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Hydration support during retinoid adjustment.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Humectants stack well.",
+            "with": "Glycerin"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Hyaluronic acid",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Water-binding hydrator that temporarily plumps the skin's surface",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Extremely well-established as a surface hydrator. The marketing often overshoots: the plumping is real but temporary, and \"1000x its weight in water\" varies by molecular weight.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 0,
+        "simple_explanation": "A molecule your body already makes that can hold many times its weight in water — like a sponge for your skin's surface. It gives an immediate hydrated, plumper look. What it doesn't do: permanently change your skin or \"fill\" wrinkles from a jar. The effect lasts as long as the hydration does.",
+        "science_explanation": "Hyaluronic acid is a glycosaminoglycan humectant. Topically, most of it (especially high-molecular-weight forms) stays in the stratum corneum, binding water and improving surface hydration and the appearance of fine lines. Lower-molecular-weight fractions penetrate somewhat better; claims of deep dermal effects from topical application are weakly supported. In very dry air it can theoretically draw water from skin — pairing with an occlusive moisturizer helps.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "glow recipe|watermelon glow niacinamide dew drops": [
+    {
+      "id": "feafb60a-7cd7-437e-a956-943762652e8e",
+      "product_id": "46e64cb3-b7b1-4db4-a7ff-743901c6e09f",
+      "ingredient_id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+      "role_in_product": "The skincare half of this glow hybrid — percentage not stated in the name.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "0e6f0208-ea10-4eac-8f72-124725fca46c",
+        "sources": [
+          {
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8389214/",
+            "title": "Mechanistic Basis and Clinical Evidence for Nicotinamide in Skin Aging and Pigmentation",
+            "publisher": "Antioxidants (PMC)"
+          },
+          {
+            "url": "https://pubmed.ncbi.nlm.nih.gov/17147561/",
+            "title": "Nicotinic acid/niacinamide and the skin",
+            "publisher": "J Cosmet Dermatol (PubMed)"
+          }
+        ],
+        "functions": [
+          "barrier support",
+          "brightening",
+          "oil regulation",
+          "soothing"
+        ],
+        "inci_name": "Niacinamide",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Niacinamide can buffer retinoid irritation — a well-liked pairing.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Fine together in modern formulas — the old incompatibility claim is outdated (see claims).",
+            "with": "Ascorbic Acid"
+          },
+          {
+            "note": "Commonly combined for redness and tone.",
+            "with": "Azelaic Acid"
+          }
+        ],
+        "updated_at": "2026-08-17T22:39:46.15272+00:00",
+        "common_name": "Niacinamide (Vitamin B3)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Calms, strengthens the skin barrier, and helps with oil and uneven tone",
+        "active_family": "vitamin_b3",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "One of the better-studied cosmetic ingredients, with multiple randomized controlled trials at 2–5% for barrier function and pigmentation. Claims tied to very high percentages (10%+) outrun the evidence — more is not clearly better.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "A form of vitamin B3 that's one of the most reliable all-rounders in skincare. It helps your skin hold onto moisture, calms redness, and over time can soften dark spots and large-looking pores. It's gentle enough that almost everyone can use it.",
+        "science_explanation": "Niacinamide is a precursor to NAD+/NADP+, coenzymes involved in skin cell energy metabolism. Clinical studies support its role in increasing ceramide synthesis (barrier repair), reducing transepidermal water loss, and inhibiting melanosome transfer (pigmentation). Most studies use 2–5%; benefits above ~5% are less clearly established and very high concentrations can sting some people.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ],
+  "the ordinary|lactic acid 10% + ha": [
+    {
+      "id": "a6c00376-a019-4519-8c35-16b0a48d9eec",
+      "product_id": "cc938363-1a09-45fa-af1c-90230003ec7a",
+      "ingredient_id": "14e000ff-9422-4585-8593-5a11f785dc75",
+      "role_in_product": "Hydration support to offset exfoliation dryness.",
+      "form_note": null,
+      "concentration_pct": null,
+      "concentration_source": null,
+      "display_order": 1,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "14e000ff-9422-4585-8593-5a11f785dc75",
+        "sources": [],
+        "functions": [
+          "humectant",
+          "hydration"
+        ],
+        "inci_name": "Sodium Hyaluronate",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [
+          {
+            "note": "Hydration support during retinoid adjustment.",
+            "with": "Retinol"
+          },
+          {
+            "note": "Humectants stack well.",
+            "with": "Glycerin"
+          }
+        ],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Hyaluronic acid",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Water-binding hydrator that temporarily plumps the skin's surface",
+        "active_family": "humectant",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Extremely well-established as a surface hydrator. The marketing often overshoots: the plumping is real but temporary, and \"1000x its weight in water\" varies by molecular weight.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 0,
+        "simple_explanation": "A molecule your body already makes that can hold many times its weight in water — like a sponge for your skin's surface. It gives an immediate hydrated, plumper look. What it doesn't do: permanently change your skin or \"fill\" wrinkles from a jar. The effect lasts as long as the hydration does.",
+        "science_explanation": "Hyaluronic acid is a glycosaminoglycan humectant. Topically, most of it (especially high-molecular-weight forms) stays in the stratum corneum, binding water and improving surface hydration and the appearance of fine lines. Lower-molecular-weight fractions penetrate somewhat better; claims of deep dermal effects from topical application are weakly supported. In very dry air it can theoretically draw water from skin — pairing with an occlusive moisturizer helps.",
+        "is_cell_turnover_active": false
+      }
+    },
+    {
+      "id": "52bb927e-c328-412a-835a-54ac7e4d354a",
+      "product_id": "cc938363-1a09-45fa-af1c-90230003ec7a",
+      "ingredient_id": "4d44b6d6-c099-460c-8b53-11b182429fb0",
+      "role_in_product": "The exfoliant: a gentler AHA than glycolic at like-for-like strength.",
+      "form_note": null,
+      "concentration_pct": 10,
+      "concentration_source": "product_name",
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "4d44b6d6-c099-460c-8b53-11b182429fb0",
+        "sources": [],
+        "functions": [
+          "exfoliant",
+          "cell turnover",
+          "hydration",
+          "brightening"
+        ],
+        "inci_name": "Lactic Acid",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Lactic acid (AHA)",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [
+          {
+            "note": "Doubling up on AHAs risks over-exfoliation.",
+            "with": "Glycolic Acid"
+          }
+        ],
+        "what_it_does": "A gentler AHA exfoliant that also hydrates",
+        "active_family": "aha",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Well-supported as a gentler AHA; most evidence at 5–12%. As with all AHAs, effective strength depends on pH, which is usually undisclosed.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": null,
+        "simple_explanation": "An alpha-hydroxy acid like glycolic, but with a larger molecule — so it works closer to the surface and is noticeably gentler. It also happens to be part of your skin's own natural moisturizing system, which is why it exfoliates and hydrates at the same time. A good first AHA.",
+        "science_explanation": "Lactic acid promotes desquamation like other AHAs but penetrates less deeply due to molecular size, and is a component of the skin's natural moisturizing factor (NMF), contributing humectant effects. Same pH/free-acid caveats as all AHAs; same photosensitivity warning.",
+        "is_cell_turnover_active": true
+      }
+    }
+  ],
+  "the ordinary|100% plant-derived squalane": [
+    {
+      "id": "ae67a010-580e-4a38-b3cc-4244e6804186",
+      "product_id": "247869ef-bfff-4a5a-bde6-0a97ce6e04b0",
+      "ingredient_id": "e4452e12-723c-4581-8efa-01b24c483539",
+      "role_in_product": "The entire formula: a skin-identical moisturizing lipid.",
+      "form_note": "Single-ingredient product.",
+      "concentration_pct": 100,
+      "concentration_source": "product_name",
+      "display_order": 0,
+      "data_source": "seed",
+      "ingredients": {
+        "id": "e4452e12-723c-4581-8efa-01b24c483539",
+        "sources": [],
+        "functions": [
+          "emollient",
+          "moisturizing"
+        ],
+        "inci_name": "Squalane",
+        "created_at": "2026-07-08T15:18:39.351693+00:00",
+        "pairs_well": [],
+        "updated_at": "2026-07-08T15:18:39.351693+00:00",
+        "common_name": "Squalane",
+        "data_source": "seed",
+        "is_fragrance": false,
+        "pairs_poorly": [],
+        "what_it_does": "Feather-light moisturizing oil that mimics skin's own sebum",
+        "active_family": "emollient",
+        "evidence_level": "well_established",
+        "pregnancy_note": null,
+        "common_allergen": false,
+        "comedogenic_note": null,
+        "evidence_summary": "Uncontroversial emollient with a strong tolerability record.",
+        "is_essential_oil": false,
+        "pregnancy_caution": false,
+        "comedogenic_rating": 0,
+        "simple_explanation": "A lightweight, odorless oil that's the shelf-stable cousin of squalene, a moisturizer your skin produces naturally. Because it's so similar to what skin already makes, it absorbs easily and suits almost everyone, including many oily and sensitive skins. One of the safest \"just add moisture\" picks.",
+        "science_explanation": "Squalane is hydrogenated squalene (originally shark-derived, now typically from sugarcane or olives), a stable, non-polar emollient. It's biocompatible with sebum, non-sensitizing, and generally regarded as low-comedogenic, though formal human comedogenicity data is limited.",
+        "is_cell_turnover_active": false
+      }
+    }
+  ]
+}

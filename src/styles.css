@@ -9,20 +9,34 @@
   --accent: #ff5f7e;
   --good: #6cd97e;
   --warn: #f1c40f;
-  --bad:  #ff6b6b;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --bad: #ff6b6b;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
 }
 
-html, body, #root { height: 100%; margin: 0; }
-body { background: var(--bg); color: var(--text); overflow: hidden; }
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
 
 .app {
   position: fixed;
-  top: 0; right: 0; bottom: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   width: 480px;
   background: var(--panel);
   border-left: 1px solid var(--border);
-  display: flex; flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .tabs {
@@ -40,7 +54,10 @@ body { background: var(--bg); color: var(--text); overflow: hidden; }
   cursor: pointer;
   text-align: center;
 }
-.tab.active { color: var(--text); border-bottom: 2px solid var(--accent); }
+.tab.active {
+  color: var(--text);
+  border-bottom: 2px solid var(--accent);
+}
 
 .panel {
   flex: 1;
@@ -49,64 +66,153 @@ body { background: var(--bg); color: var(--text); overflow: hidden; }
 }
 
 .row {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 8px; padding: 8px 10px;
-  border: 1px solid var(--border); border-radius: 6px;
-  background: var(--panel-2); margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel-2);
+  margin-bottom: 8px;
 }
 
 .status {
-  font-size: 11px; padding: 2px 6px; border-radius: 999px; text-transform: uppercase;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  text-transform: uppercase;
 }
-.status.queued      { background: #2c2c30; color: var(--muted); }
-.status.downloading { background: #2c4a3a; color: var(--good); }
-.status.transcribing{ background: #2c4a3a; color: var(--good); }
-.status.vision      { background: #2c4a3a; color: var(--good); }
-.status.nlp         { background: #2c4a3a; color: var(--good); }
-.status.ready       { background: #1d3a23; color: var(--good); }
-.status.failed      { background: #4a1d1d; color: var(--bad); }
+.status.queued {
+  background: #2c2c30;
+  color: var(--muted);
+}
+.status.downloading {
+  background: #2c4a3a;
+  color: var(--good);
+}
+.status.transcribing {
+  background: #2c4a3a;
+  color: var(--good);
+}
+.status.vision {
+  background: #2c4a3a;
+  color: var(--good);
+}
+.status.nlp {
+  background: #2c4a3a;
+  color: var(--good);
+}
+.status.ready {
+  background: #1d3a23;
+  color: var(--good);
+}
+.status.failed {
+  background: #4a1d1d;
+  color: var(--bad);
+}
 
-h2 { font-size: 14px; margin: 0 0 8px; letter-spacing: .02em; text-transform: uppercase; color: var(--muted); }
-small.url { color: var(--muted); font-size: 11px; word-break: break-all; }
+h2 {
+  font-size: 14px;
+  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+small.url {
+  color: var(--muted);
+  font-size: 11px;
+  word-break: break-all;
+}
 
 button.primary {
-  background: var(--accent); color: #fff; border: none; padding: 6px 10px;
-  border-radius: 6px; font-size: 12px; cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
 }
 button.ghost {
-  background: transparent; color: var(--text); border: 1px solid var(--border);
-  padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
 }
-button:disabled { opacity: .5; cursor: not-allowed; }
-
-input, select, textarea {
-  background: var(--panel); color: var(--text); border: 1px solid var(--border);
-  padding: 6px 8px; border-radius: 4px; font-size: 12px; width: 100%;
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
-label { font-size: 11px; color: var(--muted); display: block; margin: 6px 0 2px; }
 
-.kv { display: grid; grid-template-columns: 100px 1fr; gap: 4px; font-size: 12px; }
-.kv .k { color: var(--muted); }
+input,
+select,
+textarea {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 100%;
+}
+label {
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+  margin: 6px 0 2px;
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 4px;
+  font-size: 12px;
+}
+.kv .k {
+  color: var(--muted);
+}
 
 .swatch {
-  width: 14px; height: 14px; border-radius: 50%;
-  display: inline-block; vertical-align: middle; margin-right: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
   border: 1px solid var(--border);
 }
 
 .toast-feed {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  max-height: 120px; overflow-y: auto;
-  background: rgba(0,0,0,.5); padding: 6px 10px;
-  border-top: 1px solid var(--border); font-size: 11px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 120px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 10px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
   color: var(--muted);
 }
-.toast-feed .err { color: var(--bad); }
+.toast-feed .err {
+  color: var(--bad);
+}
 
 .entity-card {
-  border: 1px solid var(--border); border-radius: 6px;
-  background: var(--panel-2); padding: 10px; margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel-2);
+  padding: 10px;
+  margin-bottom: 8px;
 }
 .entity-card .source {
-  font-size: 10px; text-transform: uppercase; color: var(--accent); letter-spacing: .05em;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--accent);
+  letter-spacing: 0.05em;
 }

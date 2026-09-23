@@ -2,8 +2,10 @@
   if (window.__mvseInstalled) return;
   window.__mvseInstalled = true;
 
-  const send = data => {
-    try { window.__admin?.send('tiktok:videoCaptured', data); } catch {}
+  const send = (data) => {
+    try {
+      window.__admin?.send('tiktok:videoCaptured', data);
+    } catch {}
   };
 
   window.__mvseCapture = () => {
@@ -15,7 +17,11 @@
   function currentVideoMeta() {
     const m = location.pathname.match(/^\/@([^/]+)\/video\/(\d+)/);
     if (!m) return null;
-    return { url: `https://www.tiktok.com${location.pathname}`, handle: m[1], videoId: m[2] };
+    return {
+      url: `https://www.tiktok.com${location.pathname}`,
+      handle: m[1],
+      videoId: m[2],
+    };
   }
 
   function pickText(selectors) {
@@ -54,14 +60,38 @@
       'p[data-e2e="comment-level-1"]',
       'span[data-e2e*="comment"]',
     ],
-    commentAuthor: ['[data-e2e="comment-username-1"]', 'a[data-e2e*="username"]'],
-    commentLikes: ['[data-e2e="comment-like-count"]', 'span[data-e2e*="like"]'],
+    commentAuthor: [
+      '[data-e2e="comment-username-1"]',
+      'a[data-e2e*="username"]',
+    ],
+    commentLikes: [
+      '[data-e2e="comment-like-count"]',
+      'span[data-e2e="comment-like-count"]',
+      'div[data-e2e="comment-like-count"]',
+      'span[data-e2e*="comment-like"]',
+    ],
     viewCount: [
       '[data-e2e="video-views"]',
-      'strong[data-e2e="like-count"]',
-      'strong[data-e2e*="view"]',
+      'strong[data-e2e="video-views"]',
+      'strong[data-e2e*="view-count"]',
     ],
   };
+
+  // TikTok embeds the canonical item payload (with view count, create_time,
+  // etc.) in this script tag on individual video pages. Not present on the
+  // /foryou feed shell, so this is best-effort enrichment.
+  function readUniversalData() {
+    const tag = document.getElementById('__UNIVERSAL_DATA_FOR_REHYDRATION__');
+    if (!tag) return null;
+    try {
+      const data = JSON.parse(tag.textContent);
+      const scope = data?.__DEFAULT_SCOPE__ ?? {};
+      const detail = scope['webapp.video-detail']?.itemInfo?.itemStruct;
+      return detail ?? null;
+    } catch {
+      return null;
+    }
+  }
 
   function harvest() {
     const meta = currentVideoMeta();
@@ -70,22 +100,37 @@
     let items = [];
     for (const sel of SEL.commentItem) {
       const found = Array.from(document.querySelectorAll(sel));
-      if (found.length > 0) { items = found.slice(0, 50); break; }
+      if (found.length > 0) {
+        items = found.slice(0, 50);
+        break;
+      }
     }
 
-    const top_comments = items.map(el => ({
-      text: readWithin(el, SEL.commentText) ?? el.textContent?.trim() ?? '',
-      author: readWithin(el, SEL.commentAuthor),
-      like_count: parseCount(readWithin(el, SEL.commentLikes)) ?? 0,
-    })).filter(c => c.text);
+    const top_comments = items
+      .map((el) => ({
+        text: readWithin(el, SEL.commentText) ?? el.textContent?.trim() ?? '',
+        author: readWithin(el, SEL.commentAuthor),
+        like_count: parseCount(readWithin(el, SEL.commentLikes)) ?? 0,
+      }))
+      .filter((c) => c.text);
+
+    const ud = readUniversalData();
+    const udViewCount =
+      ud?.stats?.playCount ??
+      (ud?.statsV2?.playCount != null ? Number(ud.statsV2.playCount) : null) ??
+      null;
+    const udCreate = ud?.createTime ?? ud?.create_time;
+    const udPostedAt = udCreate
+      ? new Date(Number(udCreate) * 1000).toISOString()
+      : null;
 
     return {
       video_url: meta.url,
       creator_handle: meta.handle,
-      caption: pickText(SEL.caption),
+      caption: ud?.desc ?? pickText(SEL.caption),
       top_comments,
-      view_count: parseCount(pickText(SEL.viewCount)),
-      posted_at: null,
+      view_count: udViewCount ?? parseCount(pickText(SEL.viewCount)),
+      posted_at: udPostedAt,
       captured_at: new Date().toISOString(),
       _source: 'dom',
     };
@@ -93,7 +138,9 @@
 
   function parseCount(s) {
     if (!s) return null;
-    const m = String(s).trim().match(/([\d.,]+)\s*([KMB]?)/i);
+    const m = String(s)
+      .trim()
+      .match(/([\d.,]+)\s*([KMB]?)/i);
     if (!m) return null;
     const n = parseFloat(m[1].replace(/,/g, ''));
     const mult = { K: 1e3, M: 1e6, B: 1e9 }[(m[2] || '').toUpperCase()] ?? 1;

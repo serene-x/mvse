@@ -1,53 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../theme.dart';
-
-class BuyButtons extends StatelessWidget {
-  final String? sephoraUrl;
-  final String? ultaUrl;
-  const BuyButtons({super.key, this.sephoraUrl, this.ultaUrl});
-
-  Future<void> _open(String url) async {
-    final uri = Uri.tryParse(url);
-    if (uri == null) return;
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
-  }
-
+/// Real web links preserve browser navigation, keyboard access and popup rules.
+class SourceLink extends StatelessWidget {
+  final String url, label;
+  const SourceLink({super.key, required this.url, required this.label});
   @override
   Widget build(BuildContext context) {
-    final children = <Widget>[];
-    if (sephoraUrl != null && sephoraUrl!.isNotEmpty) {
-      children.add(Expanded(child: _BuyButton(label: 'Sephora', onTap: () => _open(sephoraUrl!))));
+    final uri = Uri.tryParse(url);
+    if (uri == null || uri.scheme != 'https' || uri.host.isEmpty) {
+      return const SizedBox.shrink();
     }
-    if (ultaUrl != null && ultaUrl!.isNotEmpty) {
-      if (children.isNotEmpty) children.add(const SizedBox(width: 10));
-      children.add(Expanded(child: _BuyButton(label: 'Ulta', onTap: () => _open(ultaUrl!), tone: ButtonTone.outline)));
-    }
-    if (children.isEmpty) return const SizedBox.shrink();
-    return Row(children: children);
+    return Link(
+        uri: uri,
+        target: LinkTarget.self,
+        builder: (context, follow) => TextButton.icon(
+            onPressed: () async {
+              try {
+                final opened = await launchUrl(uri,
+                    mode: LaunchMode.externalApplication,
+                    webOnlyWindowName: '_self');
+                if (!opened) throw StateError('Link unavailable');
+              } catch (_) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content:
+                          Text('Could not open the link. Please try again.')));
+                }
+              }
+            },
+            label: Text(label),
+            icon: const Icon(Icons.north_east, size: 15),
+            iconAlignment: IconAlignment.end));
   }
 }
 
-enum ButtonTone { filled, outline }
-
-class _BuyButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-  final ButtonTone tone;
-  const _BuyButton({required this.label, required this.onTap, this.tone = ButtonTone.filled});
-
+class BuyButtons extends StatelessWidget {
+  final String? sephoraUrl, ultaUrl, brandUrl;
+  final String? searchTerm;
+  const BuyButtons(
+      {super.key,
+      this.sephoraUrl,
+      this.ultaUrl,
+      this.brandUrl,
+      this.searchTerm});
   @override
-  Widget build(BuildContext context) {
-    if (tone == ButtonTone.outline) {
-      return OutlinedButton(onPressed: onTap, child: Text('Buy at $label'));
-    }
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppPalette.text,
-      ),
-      child: Text('Buy at $label'),
-    );
-  }
+  Widget build(BuildContext context) =>
+      Wrap(spacing: 12, runSpacing: 8, children: [
+        if (brandUrl?.isNotEmpty ?? false)
+          SourceLink(url: brandUrl!, label: 'View at the brand'),
+        if (sephoraUrl?.isNotEmpty ?? false)
+          SourceLink(url: sephoraUrl!, label: 'View at Sephora')
+        else if (searchTerm?.isNotEmpty ?? false)
+          SourceLink(
+              url: Uri.https(
+                      'www.sephora.com', '/search', {'keyword': searchTerm!})
+                  .toString(),
+              label: 'Search Sephora'),
+        if (ultaUrl?.isNotEmpty ?? false)
+          SourceLink(url: ultaUrl!, label: 'View at Ulta'),
+      ]);
 }
